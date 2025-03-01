@@ -1,0 +1,35 @@
+:root {
+  /* 🎨 Colores refinados */
+  --primary-color: #1b2b41; /* Azul oscuro confiable */
+  --secondary-color: #e2e6ed; /* Azul grisáceo para la tarjeta */
+  --accent-color: #13753e; /* Verde oscuro más sobrio */
+
+  /* 🎨 Hover */
+  --primary-hover: #23344d;
+  --secondary-hover: #3b4d67;
+  --accent-hover: #1b4a33;
+
+  /* 🎨 Texto */
+  --text-primary: #f0f0f0; /* Blanco neutro */
+  --text-secondary: #b0b8c3; /* Gris claro */
+  --text-accent: #60c79e; /* Verde más suave para enlaces */
+  
+  /* 🖋 Tipografía */
+  --font-primary: "Inter", sans-serif;
+  --font-secondary: "Merriweather", serif;
+}
+
+body {
+  background-color: var(--primary-color);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.card{
+  background-color: var(--secondary-color);
+  box-shadow: 1px 1px 10px 1px rgb(73, 71, 71) inset;
+
+}
+

@@ -1,12 +1,18 @@
-import AppRouter from "./router/AppRouter";
-import MainLayout from "./layout/MainLayout";
+import { BrowserRouter as Router } from "react-router-dom";
+import { AppRoutes } from "../src/router/AppRouter";
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
-function App() {
+const App = () => {
+  
+    useEffect(() => {
+      AOS.init({ duration: 1000, once: true });
+    }, []); // Ejecuta solo una vez al montar el componente
   return (
-    <MainLayout>
-      <AppRouter />
-    </MainLayout>
+    
+      <AppRoutes />
+    
   );
-}
-
+};
 export default App;

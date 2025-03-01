@@ -1,0 +1,16 @@
+.logo-login{
+    height: 200px;
+    width: 200px;
+  }
+  .btn-login{
+    background-color: var(--accent-color);
+    font-weight: bold;
+  }
+  .btn-login:hover{
+    background-color: var(--accent-hover);
+  }
+  .btn-outline{
+    margin-top: 1px;
+    background-color: white;
+    height: 36px;
+  }
