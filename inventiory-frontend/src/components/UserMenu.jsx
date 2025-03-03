@@ -5,6 +5,7 @@ import NavbarDropdown from "./NavbarDropdown";
 import NavbarItem from "./NavbarItem";
 // import Documentacion from "../assets/Manual De Usuario.pdf";
 import "../styles/modal.css";
+import "../styles/userMenu.css";
 
 const UserMenu = ({ handleLogout }) => {
   const [show, setShow] = useState(false);

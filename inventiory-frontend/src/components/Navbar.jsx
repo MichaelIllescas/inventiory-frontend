@@ -6,7 +6,7 @@ import logo from "../assets/img/logo.png";
 import NavbarItem from "./NavbarItem";
 import NavbarDropdown from "./NavbarDropdown";
 import UserMenu from "./UserMenu";
-import { Users, UserPlus, List,  Settings } from "lucide-react";
+import { Users, UserPlus, List } from "lucide-react";
 import '../styles/nav.css'
 const handleLogout = async () => {
   try {
@@ -20,7 +20,7 @@ const handleLogout = async () => {
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg fixed-top card rounded-0">
+    <nav className="navbar navbar-expand-lg fixed-top card rounded">
       <div className="container">
         <Link to="/index" className="navbar-brand">
           <img src={logo} width="55" height="50" alt="Logo Inventiory" />
@@ -43,14 +43,9 @@ const Navbar = () => {
                 text="Registrar Usuario"
               />
               <NavbarItem
-                url="/usersList"
+                url="/userList"
                 icon={List}
                 text="Lista de Usuarios"
-              />
-              <NavbarItem
-                url="/changeStateUser"
-                icon={Settings}
-                text="Habilitar/Desahbilitar"
               />
             </NavbarDropdown>
           </ul>
