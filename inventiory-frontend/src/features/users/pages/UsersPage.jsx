@@ -4,8 +4,8 @@ import useUpdateUser from "../api/useUpdateUser";
 import useChangeUserState from "../api/useChangeUserState"; // Nuevo hook
 import DataTable from "../../../components/DataTable";
 import { LoadingScreen } from "../../../components/LoadingScreen";
-import EditModal from "./EditModal";
-import ToastMessage from "./ToastMessage";
+import EditModal from "./../../../components/EditModal";
+import ToastMessage from "./../../../components/ToastMessage";
 import ConfirmChangeStateModal from "./ConfirmChangeStateModal";
 
 const UsersPage = () => {

@@ -6,7 +6,7 @@ import logo from "../assets/img/logo.png";
 import NavbarItem from "./NavbarItem";
 import NavbarDropdown from "./NavbarDropdown";
 import UserMenu from "./UserMenu";
-import { Users, UserPlus, List } from "lucide-react";
+import { Users, UserPlus, List , Truck} from "lucide-react";
 import '../styles/nav.css'
 const handleLogout = async () => {
   try {
@@ -23,7 +23,7 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg fixed-top card rounded">
       <div className="container">
         <Link to="/index" className="navbar-brand">
-          <img src={logo} width="55" height="50" alt="Logo Inventiory" />
+          <img src={logo} width="55" height="50" alt="Logo Inventiory" className="rotate-center"/>
         </Link>
         <button
           className="navbar-toggler"
@@ -35,6 +35,23 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse " id="navbarNav">
           <ul className="navbar-nav me-auto ">
+
+     
+            {/* providers managenent */}
+            <NavbarDropdown text="Proveedores" icon={Truck}>
+              <NavbarItem
+                url="/providerRegister"
+                icon={Truck}
+                text="Registrar Proveedor"
+              />
+              <NavbarItem
+                url="/providerList"
+                icon={List}
+                text="Lista de Proveedores"
+              />
+            </NavbarDropdown>
+
+
             {/* users managenent */}
             <NavbarDropdown text="Usuarios" icon={Users}>
               <NavbarItem
@@ -48,6 +65,7 @@ const Navbar = () => {
                 text="Lista de Usuarios"
               />
             </NavbarDropdown>
+            
           </ul>
 
           {/* Menú de Usuario */}

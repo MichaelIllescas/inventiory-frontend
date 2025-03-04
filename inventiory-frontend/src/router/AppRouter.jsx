@@ -5,6 +5,8 @@ import  UsersPage  from "../features/users/pages/UsersPage";
 import  RegisterForm  from "../features/users/pages/RegisterForm";
 // import { Profile } from "../features/profile/Profile";
 import { ProtectedRoute } from "./ProtectedRoute";
+import ProviderRegister from "../features/providers/pages/ProviderRegister";
+import ProvidersPage from "../features/providers/pages/ProvidersPage";
 
 export const AppRoutes = () => {
   return (
@@ -18,6 +20,11 @@ export const AppRoutes = () => {
         <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
         <Route path="/userList" element={<ProtectedRoute element={<UsersPage/>} />} />
         <Route path="/userRegister" element={<ProtectedRoute element={<RegisterForm/>} />} />
+        <Route path="/providerRegister" element={<ProtectedRoute element={<ProviderRegister/>} />} />
+        <Route path="/providerList" element={<ProtectedRoute element={<ProvidersPage/>} />} />
+
+
+
       {/* Redirigir cualquier ruta desconocida a "/login" */}
       <Route path="*" element={<LoginPage />} />
     </Routes>

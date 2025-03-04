@@ -71,7 +71,7 @@ export const LoginPage = () => {
             <div className="card w-100">
               <div className="card-body">
                 <div className="d-flex justify-content-center align-items-center py-0 m-0">
-                  <img src={logo} alt="Logo" width="200" />
+                  <img src={logo} alt="Logo" width="200" className="rotate-vertical-center" />
                 </div>
                 <hr />
                 <div className="pt-0 pb-2 text-center">

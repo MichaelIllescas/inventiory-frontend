@@ -20,8 +20,16 @@
   }
 
   nav{
-    background-color: var(--secondary-color);
-    color: var(--text-accent);
+    /* background-color: var(--secondary-color);
+     */
+     background-image: url('../assets/img/job297-ploy-07c-blue-01.jpg');
+     background-size: contain;
+     background-position: center;
+     background-repeat: repeat;
+     background-attachment: fixed;
+     background-blend-mode:  darken;
+    color: black;
+    font-weight: bolder;
     box-shadow: 0px 0px 5px 3px rgb(168, 167, 167) inset, 0px 0px 15px 1px rgb(22, 20, 20)   !important
   }
 
@@ -33,10 +41,18 @@
   }
 
   .ul-dropdown{
-    background-color: var(--secondary-color);
+    background-image: url('../assets/img/job297-ploy-07c-blue-01.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-blend-mode:  darken;
     box-shadow: 1px 1px 10px 1px rgb(73, 71, 71) inset;
     padding: 5px 15px;
-    min-width: 210px; /* Ajusta según necesites */
+    min-width: 250px; /* Ajusta según necesites */
   }
 
+  i{
+    font-weight: 150px;
+  }
 
