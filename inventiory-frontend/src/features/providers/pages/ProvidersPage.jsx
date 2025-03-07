@@ -4,6 +4,7 @@ import useUpdateProvider from "../api/useUpdateProvider"; // Hook para actualiza
 import DataTable from "../../../components/DataTable";
 import { LoadingScreen } from "../../../components/LoadingScreen";
 import EditModal from "./EditModal";
+import DetailsModal from "./DetailsModal";
 import ToastMessage from "../../../components/ToastMessage";
 
 const ProvidersPage = () => {
@@ -11,6 +12,7 @@ const ProvidersPage = () => {
   const { updateProvider } = useUpdateProvider();
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState(null);
   const [toast, setToast] = useState({
     show: false,
@@ -23,44 +25,28 @@ const ProvidersPage = () => {
     fetchProviders(); // Cargar proveedores al montar el componente
   }, []);
 
-  // ✅ Filtrar los datos al abrir el modal
+  // ✅ Abrir modal de edición
   const handleEdit = (id) => {
     const provider = providers.find((p) => p.id === id);
     if (!provider) return;
 
-    setSelectedProvider({
-      id: provider.id, // Se necesita para la URL en la actualización
-      name: provider.name,
-      businessName: provider.businessName,
-      taxId: provider.taxId,
-      email: provider.email,
-      phone: provider.phone,
-      address: provider.address,
-      website: provider.website,
-      contactPerson: provider.contactPerson,
-      notes: provider.notes,
-    });
-
+    setSelectedProvider(provider);
     setIsEditModalOpen(true);
   };
 
-  // ✅ Filtrar los datos antes de enviar la solicitud
+  // ✅ Abrir modal de detalles
+  const handleDetails = (id) => {
+    const provider = providers.find((p) => p.id === id);
+    if (!provider) return;
+
+    setSelectedProvider(provider);
+    setIsDetailsModalOpen(true);
+  };
+
+  // ✅ Guardar cambios en el proveedor
   const handleSave = async (updatedProvider) => {
     try {
-      const sanitizedProvider = {
-        id: updatedProvider.id, // Solo para la URL
-        name: updatedProvider.name,
-        businessName: updatedProvider.businessName,
-        taxId: updatedProvider.taxId,
-        email: updatedProvider.email,
-        phone: updatedProvider.phone,
-        address: updatedProvider.address,
-        website: updatedProvider.website,
-        contactPerson: updatedProvider.contactPerson,
-        notes: updatedProvider.notes,
-      };
-
-      await updateProvider(sanitizedProvider);
+      await updateProvider(updatedProvider);
 
       setToast({
         show: true,
@@ -73,40 +59,34 @@ const ProvidersPage = () => {
       fetchProviders();
     } catch (error) {
       console.error("Error en handleSave:", error);
-      let errorMessage = "Error desconocido al actualizar proveedor";
-
-      if (error.response?.data?.error) {
-        errorMessage = error.response.data.error;
-      } else if (error.message) {
-        errorMessage = error.message;
-      }
-
       setToast({
         show: true,
         title: "Error",
-        message: errorMessage,
+        message: "Error al actualizar proveedor",
         variant: "danger",
       });
     }
   };
 
+  // ✅ Definir columnas de la tabla (solo datos básicos)
   const columns = useMemo(
     () => [
-      { Header: "ID", accessor: "id" },
       { Header: "NOMBRE", accessor: "name" },
-      { Header: "NOMBRE COMERCIAL", accessor: "businessName" },
-      { Header: "CUIT/CUIL", accessor: "taxId" },
       { Header: "EMAIL", accessor: "email" },
       { Header: "TELÉFONO", accessor: "phone" },
-      { Header: "DIRECCIÓN", accessor: "address" },
-      { Header: "SITIO WEB", accessor: "website" },
       { Header: "CONTACTO", accessor: "contactPerson" },
-      { Header: "FECHA DE REGISTRO", accessor: "registrationDate" },
       {
         Header: "ACCIONES",
         accessor: "actions",
         Cell: ({ row }) => (
-          <div>
+          <div className="d-flex gap-2">
+            <button
+              className="btn btn-info btn-sm"
+              onClick={() => handleDetails(row.original.id)}
+              style={{ width: "40px", margin: "0 auto", borderRadius: "150px" }}
+            >
+              🔍
+            </button>
             <button
               className="btn btn-primary btn-sm"
               onClick={() => handleEdit(row.original.id)}
@@ -131,11 +111,19 @@ const ProvidersPage = () => {
         <DataTable columns={columns} data={providers} />
       </div>
 
+      {/* Modal de Edición */}
       <EditModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         data={selectedProvider}
         onSubmit={handleSave}
+      />
+
+      {/* Nuevo Modal de Detalles */}
+      <DetailsModal
+        isOpen={isDetailsModalOpen}
+        onClose={() => setIsDetailsModalOpen(false)}
+        data={selectedProvider}
       />
 
       <ToastMessage

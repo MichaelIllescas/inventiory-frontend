@@ -6,8 +6,8 @@ import logo from "../assets/img/logo.png";
 import NavbarItem from "./NavbarItem";
 import NavbarDropdown from "./NavbarDropdown";
 import UserMenu from "./UserMenu";
-import { Users, UserPlus, List , Truck} from "lucide-react";
-import '../styles/nav.css'
+import { Users, UserPlus, List, Truck, Package, RefreshCcw, TrendingUp, LucideTrendingUpDown  } from "lucide-react";
+import "../styles/nav.css";
 const handleLogout = async () => {
   try {
     await apiClient.post("/auth/logout");
@@ -20,10 +20,16 @@ const handleLogout = async () => {
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg fixed-top card rounded">
+    <nav className="navbar navbar-expand-lg fixed-top  ">
       <div className="container">
         <Link to="/index" className="navbar-brand">
-          <img src={logo} width="55" height="50" alt="Logo Inventiory" className="rotate-center"/>
+          <img
+            src={logo}
+            width="55"
+            height="50"
+            alt="Logo Inventiory"
+            className="rotate-center"
+          />
         </Link>
         <button
           className="navbar-toggler"
@@ -36,7 +42,30 @@ const Navbar = () => {
         <div className="collapse navbar-collapse " id="navbarNav">
           <ul className="navbar-nav me-auto ">
 
-     
+            {/* products managenent */}
+            <NavbarDropdown text="Productos" icon={Package}>
+              <NavbarItem
+                url="/productRegister"
+                icon={Package}
+                text="Registrar Producto"
+              />
+              <NavbarItem
+                url="/productsList"
+                icon={List}
+                text="Lista de Productos"
+              />
+              <NavbarItem
+                url="/updateStock"
+                icon={RefreshCcw}
+                text="Actualizar Stocks"
+              />
+                 <NavbarItem
+                url="/updatePrice"
+                icon={LucideTrendingUpDown }
+                text="Actualización de Precios"
+              />
+              
+            </NavbarDropdown>
             {/* providers managenent */}
             <NavbarDropdown text="Proveedores" icon={Truck}>
               <NavbarItem
@@ -51,7 +80,6 @@ const Navbar = () => {
               />
             </NavbarDropdown>
 
-
             {/* users managenent */}
             <NavbarDropdown text="Usuarios" icon={Users}>
               <NavbarItem
@@ -65,7 +93,6 @@ const Navbar = () => {
                 text="Lista de Usuarios"
               />
             </NavbarDropdown>
-            
           </ul>
 
           {/* Menú de Usuario */}

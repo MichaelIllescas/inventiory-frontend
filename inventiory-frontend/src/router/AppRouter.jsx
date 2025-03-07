@@ -7,6 +7,10 @@ import  RegisterForm  from "../features/users/pages/RegisterForm";
 import { ProtectedRoute } from "./ProtectedRoute";
 import ProviderRegister from "../features/providers/pages/ProviderRegister";
 import ProvidersPage from "../features/providers/pages/ProvidersPage";
+import ProductRegister from "../features/products/pages/ProductRegister";
+import ProductPage from "../features/products/pages/ProductsPage";
+import UpdateStock from "../features/products/pages/StockUpdate";
+import ModifyPrice from "../features/products/pages/ModifyPrice";
 
 export const AppRoutes = () => {
   return (
@@ -22,8 +26,10 @@ export const AppRoutes = () => {
         <Route path="/userRegister" element={<ProtectedRoute element={<RegisterForm/>} />} />
         <Route path="/providerRegister" element={<ProtectedRoute element={<ProviderRegister/>} />} />
         <Route path="/providerList" element={<ProtectedRoute element={<ProvidersPage/>} />} />
-
-
+        <Route path="/productRegister" element={<ProtectedRoute element={<ProductRegister/>} />} />
+        <Route path="/productsList" element={<ProtectedRoute element={<ProductPage/>} />} />
+        <Route path="/updateStock" element={<ProtectedRoute element={<UpdateStock/>} />} />
+        <Route path="/updatePrice" element={<ProtectedRoute element={<ModifyPrice/>} />} />
 
       {/* Redirigir cualquier ruta desconocida a "/login" */}
       <Route path="*" element={<LoginPage />} />
