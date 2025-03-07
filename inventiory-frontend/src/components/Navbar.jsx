@@ -79,6 +79,19 @@ const Navbar = () => {
                 text="Lista de Proveedores"
               />
             </NavbarDropdown>
+                {/* clients managenent */}
+                <NavbarDropdown text="Clientes" icon={Truck}>
+              <NavbarItem
+                url="/clientRegister"
+                icon={Truck}
+                text="Registrar Cliente"
+              />
+              <NavbarItem
+                url="/clientsList"
+                icon={List}
+                text="Lista de Clientes"
+              />
+            </NavbarDropdown>
 
             {/* users managenent */}
             <NavbarDropdown text="Usuarios" icon={Users}>
