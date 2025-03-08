@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   useTable,
   usePagination,
@@ -43,7 +43,7 @@ function DataTable({ columns, data }) {
     {
       columns,
       data,
-      initialState: { pageSize: 5 }, // Número de filas por página
+      initialState: { pageSize: 5 },
     },
     useGlobalFilter,
     useSortBy,
@@ -66,39 +66,42 @@ function DataTable({ columns, data }) {
           {...getTableProps()}
           className="table table-striped table-bordered table-hover"
         >
-          <thead className="table-dark  " data-aos="fade-left">
+          <thead className="table-dark" data-aos="fade-left">
             {headerGroups.map((headerGroup) => (
-              <tr 
+              <tr
                 {...headerGroup.getHeaderGroupProps()}
-                key={headerGroup.id}
+                key={headerGroup.getHeaderGroupProps().key} 
                 data-aos="fade-left"
               >
                 {headerGroup.headers.map((column) => (
                   <th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  key={column.id}
-                  className="text-center align-middle"
-                  data-aos="fade-left"
-                >
-                  {column.render("Header")}
-                  <span style={{ display: "block", textAlign: "center" }}>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? " 🔽"
-                        : " 🔼"
-                      : " ⬍"}
-                  </span>
-                </th>
-                
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    key={column.id}
+                    className="text-center align-middle"
+                    data-aos="fade-left"
+                  >
+                    {column.render("Header")}
+                    <span style={{ display: "block", textAlign: "center" }}>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? " 🔽"
+                          : " 🔼"
+                        : " ⬍"}
+                    </span>
+                  </th>
                 ))}
               </tr>
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row, index) => {
+            {page.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} key={row.id} data-aos="fade-left">
+                <tr
+                  {...row.getRowProps()}
+                  key={row.original.id || row.getRowProps().key} 
+                  data-aos="fade-left"
+                >
                   {row.cells.map((cell) => (
                     <td
                       {...cell.getCellProps()}
@@ -112,11 +115,11 @@ function DataTable({ columns, data }) {
               );
             })}
           </tbody>
-          <tfoot >
-            <tr >
-              <td colSpan="1" className="bg-dark text-white">
+          <tfoot>
+            <tr>
+              <td colSpan={columns.length} className="bg-dark text-white">
                 <div className="d-flex align-items-center justify-content-center">
-                 Total: {data.length}
+                  Total: {data.length}
                 </div>
               </td>
             </tr>
@@ -124,38 +127,34 @@ function DataTable({ columns, data }) {
         </table>
       </div>
 
-    {/* Controles de paginación */}
-<div className="container table-pagination">
-  <div className="row justify-content-center">
-    <div className="col-auto">
-      <button
-        className="btn bg-dark text-white"
-        onClick={() => previousPage()}
-        disabled={!canPreviousPage}
-      >
-        Anterior
-      </button>
-    </div>
-    <div className="col-auto d-flex align-items-center">
-      <span className="bg-dark rounded text-white px-3 py-2 text-center">
-        Página <strong>{pageIndex + 1} de {pageOptions.length}</strong>
-      </span>
-    </div>
-    <div className="col-auto">
-      <button
-        className="btn bg-dark text-white"
-        onClick={() => {
-          nextPage();
-          AOS.refresh(); // Refresca AOS al cambiar de página
-        }}
-        disabled={!canNextPage}
-      >
-        Siguiente
-      </button>
-    </div>
-  </div>
-</div>
-
+      {/* Controles de paginación */}
+      <div className="container table-pagination">
+        <div className="row justify-content-center">
+          <div className="col-auto">
+            <button
+              className="btn bg-dark text-white"
+              onClick={() => previousPage()}
+              disabled={!canPreviousPage}
+            >
+              Anterior
+            </button>
+          </div>
+          <div className="col-auto d-flex align-items-center">
+            <span className="bg-dark rounded text-white px-3 py-2 text-center">
+              Página <strong>{pageIndex + 1} de {pageOptions.length}</strong>
+            </span>
+          </div>
+          <div className="col-auto">
+            <button
+              className="btn bg-dark text-white"
+              onClick={() => nextPage()}
+              disabled={!canNextPage}
+            >
+              Siguiente
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

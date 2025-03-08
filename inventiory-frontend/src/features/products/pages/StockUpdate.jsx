@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import useFetchProducts from "../api/useProducts";
+import useFetchProducts from "../api/useProductsActives";
 import useUpdateStock from "../api/useUpdateStock";
 import { LoadingScreen } from "../../../components/LoadingScreen";
 

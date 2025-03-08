@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import apiClient from "../../../Config/axiosConfig";
 
-const useProducts = () => {
+const useProductsActives = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ const useProducts = () => {
     setError(null);
 
     try {
-      const response = await apiClient.get("/product/getProducts");
+      const response = await apiClient.get("/product/getProductsActive");
       setProducts(response.data);
     } catch (error) {
       setError(error.response?.data?.error || "Error desconocido al obtener productos.");
@@ -27,4 +27,4 @@ const useProducts = () => {
   return { products, setProducts, loading, error, fetchProducts }; // 🔹 Ahora `setProducts` está disponible
 };
 
-export default useProducts;
+export default useProductsActives;

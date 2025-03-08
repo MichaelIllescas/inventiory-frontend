@@ -6,7 +6,17 @@ import logo from "../assets/img/logo.png";
 import NavbarItem from "./NavbarItem";
 import NavbarDropdown from "./NavbarDropdown";
 import UserMenu from "./UserMenu";
-import { Users, UserPlus, List, Truck, Package, RefreshCcw, TrendingUp, LucideTrendingUpDown  } from "lucide-react";
+import {
+  Users,
+  UserPlus,
+  List,
+  Truck,
+  Package,
+  RefreshCcw,
+  LucideTrendingUpDown,
+  UserCheck ,
+  ShoppingCart,ClipboardList
+} from "lucide-react";
 import "../styles/nav.css";
 const handleLogout = async () => {
   try {
@@ -41,7 +51,6 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse " id="navbarNav">
           <ul className="navbar-nav me-auto ">
-
             {/* products managenent */}
             <NavbarDropdown text="Productos" icon={Package}>
               <NavbarItem
@@ -54,17 +63,12 @@ const Navbar = () => {
                 icon={List}
                 text="Lista de Productos"
               />
+              
               <NavbarItem
-                url="/updateStock"
-                icon={RefreshCcw}
-                text="Actualizar Stocks"
-              />
-                 <NavbarItem
                 url="/updatePrice"
-                icon={LucideTrendingUpDown }
+                icon={LucideTrendingUpDown}
                 text="Actualización de Precios"
               />
-              
             </NavbarDropdown>
             {/* providers managenent */}
             <NavbarDropdown text="Proveedores" icon={Truck}>
@@ -79,11 +83,11 @@ const Navbar = () => {
                 text="Lista de Proveedores"
               />
             </NavbarDropdown>
-                {/* clients managenent */}
-                <NavbarDropdown text="Clientes" icon={Truck}>
+            {/* clients managenent */}
+            <NavbarDropdown text="Clientes" icon={UserCheck }>
               <NavbarItem
                 url="/clientRegister"
-                icon={Truck}
+                icon={UserCheck }
                 text="Registrar Cliente"
               />
               <NavbarItem
@@ -92,18 +96,33 @@ const Navbar = () => {
                 text="Lista de Clientes"
               />
             </NavbarDropdown>
-
-            {/* users managenent */}
-            <NavbarDropdown text="Usuarios" icon={Users}>
+               {/* stocks managenent */}
+               <NavbarDropdown text="Stocks" icon={ClipboardList }>
               <NavbarItem
-                url="/userRegister"
-                icon={UserPlus}
-                text="Registrar Usuario"
+                url="/stocksList"
+                icon={ClipboardList }
+                text="Ver Stcoks"
               />
               <NavbarItem
-                url="/userList"
+                url="/updateStock"
+                icon={RefreshCcw}
+                text="Actualizar Stocks"
+              />
+            </NavbarDropdown>
+
+           
+
+            {/* buys managenent */}
+            <NavbarDropdown text="Compras" icon={ShoppingCart}>
+              <NavbarItem
+                url="/buyRegister"
+                icon={ShoppingCart}
+                text="Registrar Compra"
+              />
+              <NavbarItem
+                url="/buistHistory"
                 icon={List}
-                text="Lista de Usuarios"
+                text="Historial de Compras"
               />
             </NavbarDropdown>
           </ul>

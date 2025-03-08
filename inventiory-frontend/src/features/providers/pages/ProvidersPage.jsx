@@ -1,18 +1,23 @@
 import React, { useMemo, useState, useEffect } from "react";
 import useProviders from "../api/useProviders";
-import useUpdateProvider from "../api/useUpdateProvider"; // Hook para actualizar proveedores
+import useUpdateProvider from "../api/useUpdateProvider";
+import useToggleProviderStatus from "../api/useToggleProviderStatus";
 import DataTable from "../../../components/DataTable";
 import { LoadingScreen } from "../../../components/LoadingScreen";
 import EditModal from "./EditModal";
 import DetailsModal from "./DetailsModal";
 import ToastMessage from "../../../components/ToastMessage";
+import { Modal, Button } from "react-bootstrap";
+import { FaToggleOn, FaToggleOff } from "react-icons/fa";
 
 const ProvidersPage = () => {
-  const { providers, loading, error, fetchProviders } = useProviders();
+  const { providers, loading, error, fetchProviders, setProviders } = useProviders();
   const { updateProvider } = useUpdateProvider();
+  const { toggleStatus } = useToggleProviderStatus();
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState(null);
   const [toast, setToast] = useState({
     show: false,
@@ -22,77 +27,105 @@ const ProvidersPage = () => {
   });
 
   useEffect(() => {
-    fetchProviders(); // Cargar proveedores al montar el componente
+    fetchProviders();
   }, []);
 
-  // ✅ Abrir modal de edición
   const handleEdit = (id) => {
     const provider = providers.find((p) => p.id === id);
     if (!provider) return;
-
-    setSelectedProvider(provider);
+    setSelectedProvider({ ...provider });
     setIsEditModalOpen(true);
   };
 
-  // ✅ Abrir modal de detalles
   const handleDetails = (id) => {
     const provider = providers.find((p) => p.id === id);
     if (!provider) return;
-
-    setSelectedProvider(provider);
+    setSelectedProvider({ ...provider });
     setIsDetailsModalOpen(true);
   };
 
-  // ✅ Guardar cambios en el proveedor
+  const handleConfirmToggle = (provider) => {
+    if (!provider) return;
+    setSelectedProvider({ ...provider });
+    setIsConfirmModalOpen(true);
+  };
+
+  const handleToggleStatus = async () => {
+    if (!selectedProvider) return;
+    const newStatus = selectedProvider.state === "ACTIVO" ? "INACTIVO" : "ACTIVO";
+
+    try {
+      const response = await toggleStatus(selectedProvider.id, newStatus);
+      if (!response) throw new Error("El backend no respondió correctamente");
+
+      setToast({
+        show: true,
+        title: "Éxito",
+        message: `Proveedor ${newStatus === "ACTIVO" ? "Activado" : "Desactivado"} correctamente`,
+        variant: "success",
+      });
+
+      setIsConfirmModalOpen(false);
+      setProviders((prevProviders) =>
+        prevProviders.map((p) =>
+          p.id === selectedProvider.id ? { ...p, state: newStatus } : p
+        )
+      );
+    } catch (error) {
+      setToast({
+        show: true,
+        title: "Error",
+        message: "No se pudo cambiar el estado. Verifica que el backend esté funcionando.",
+        variant: "danger",
+      });
+    }
+  };
+
   const handleSave = async (updatedProvider) => {
     try {
       await updateProvider(updatedProvider);
-
       setToast({
         show: true,
         title: "Éxito",
         message: "Proveedor actualizado correctamente",
         variant: "success",
       });
-
       setIsEditModalOpen(false);
       fetchProviders();
     } catch (error) {
-      console.error("Error en handleSave:", error);
       setToast({
         show: true,
         title: "Error",
-        message: "Error al actualizar proveedor",
+        message: "No se pudo actualizar el proveedor",
         variant: "danger",
       });
     }
   };
 
-  // ✅ Definir columnas de la tabla (solo datos básicos)
   const columns = useMemo(
     () => [
       { Header: "NOMBRE", accessor: "name" },
       { Header: "EMAIL", accessor: "email" },
       { Header: "TELÉFONO", accessor: "phone" },
       { Header: "CONTACTO", accessor: "contactPerson" },
+      { Header: "ESTADO", accessor: "state", Cell: ({ value }) => (value === "ACTIVO" ? "Activo" : "Inactivo") },
       {
         Header: "ACCIONES",
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="d-flex gap-2">
-            <button
-              className="btn btn-info btn-sm"
-              onClick={() => handleDetails(row.original.id)}
-              style={{ width: "40px", margin: "0 auto", borderRadius: "150px" }}
-            >
+            <button className="btn btn-info btn-sm" onClick={() => handleDetails(row.original.id)} title="Ver Detalles">
               🔍
             </button>
-            <button
-              className="btn btn-primary btn-sm"
-              onClick={() => handleEdit(row.original.id)}
-              style={{ width: "40px", margin: "0 auto", borderRadius: "150px" }}
-            >
+            <button className="btn btn-primary btn-sm" onClick={() => handleEdit(row.original.id)} title="Editar Proveedor">
               ✏️
+            </button>
+            <button
+              className={`btn btn-${row.original.state === "ACTIVO" ? "danger" : "success"} btn-sm`}
+              onClick={() => handleConfirmToggle(row.original)}
+              title={row.original.state === "ACTIVO" ? "Desactivar" : "Activar"}
+            >
+              {row.original.state === "ACTIVO" ? <FaToggleOn /> : <FaToggleOff />}
             </button>
           </div>
         ),
@@ -110,29 +143,25 @@ const ProvidersPage = () => {
         <h2>Proveedores Registrados</h2>
         <DataTable columns={columns} data={providers} />
       </div>
-
-      {/* Modal de Edición */}
-      <EditModal
-        isOpen={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-        data={selectedProvider}
-        onSubmit={handleSave}
-      />
-
-      {/* Nuevo Modal de Detalles */}
-      <DetailsModal
-        isOpen={isDetailsModalOpen}
-        onClose={() => setIsDetailsModalOpen(false)}
-        data={selectedProvider}
-      />
-
-      <ToastMessage
-        show={toast.show}
-        onClose={() => setToast({ ...toast, show: false })}
-        message={toast.message}
-        title={toast.title}
-        variant={toast.variant}
-      />
+      <EditModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} data={selectedProvider} onSubmit={handleSave} />
+      <DetailsModal isOpen={isDetailsModalOpen} onClose={() => setIsDetailsModalOpen(false)} data={selectedProvider} />
+      <Modal show={isConfirmModalOpen} onHide={() => setIsConfirmModalOpen(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar Cambio de Estado</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          ¿Está seguro de que desea {selectedProvider?.state === "ACTIVO" ? "desactivar" : "activar"} el proveedor <strong>{selectedProvider?.name}</strong>?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setIsConfirmModalOpen(false)}>
+            Cancelar
+          </Button>
+          <Button variant={selectedProvider?.state === "ACTIVO" ? "danger" : "success"} onClick={handleToggleStatus}>
+            {selectedProvider?.state === "ACTIVO" ? "Desactivar" : "Activar"}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <ToastMessage show={toast.show} onClose={() => setToast({ ...toast, show: false })} message={toast.message} title={toast.title} variant={toast.variant} />
     </div>
   );
 };

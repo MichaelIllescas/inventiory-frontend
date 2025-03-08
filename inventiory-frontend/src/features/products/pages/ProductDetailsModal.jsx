@@ -16,16 +16,14 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
             <p><strong>Nombre:</strong> {product.name}</p>
             <p><strong>Marca:</strong> {product.brandName}</p>
             <p><strong>Descripción:</strong> {product.description}</p>
-            <p><strong>Precio de Compra:</strong> ${product.purchasePrice.toFixed(2)}</p>
             <p><strong>Precio de Venta:</strong> ${product.salePrice.toFixed(2)}</p>
           </Col>
           <Col md={6}>
-            <p><strong>Stock:</strong> {product.stock}</p>
+            <p><strong>Stock:</strong> {parseFloat(product.stock)}</p>
             <p><strong>Stock Mínimo:</strong> {product.minStock}</p>
             <p><strong>Categoría:</strong> {product.category}</p>
-            <p><strong>Proveedor:</strong> {product.providerName}</p>
             <p><strong>Fecha de Registro:</strong> {product.registrationDate}</p>
-            <p><strong>Última Actualización:</strong> {product.updatedDate}</p>
+            <p><strong>Última Actualización:</strong> {product.updatedDate ? product.updatedDate : "Sin actualizar"}</p>
           </Col>
         </Row>
       </Modal.Body>

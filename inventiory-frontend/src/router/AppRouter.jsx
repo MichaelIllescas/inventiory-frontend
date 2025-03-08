@@ -13,6 +13,9 @@ import UpdateStock from "../features/products/pages/StockUpdate";
 import ModifyPrice from "../features/products/pages/ModifyPrice";
 import ClientRegister from "../features/clients/pages/ClientRegister";
 import ClientsPage from "../features/clients/pages/ClientsPage";
+import ProductManagementTabs from "../features/buys/pages/ProductManagementTabs";
+import StockPage from "../features/stocks/pages/StockPage";
+import PurchasesPage from "../features/buys/pages/PurchasesPage";
 
 export const AppRoutes = () => {
   return (
@@ -28,12 +31,16 @@ export const AppRoutes = () => {
         <Route path="/userRegister" element={<ProtectedRoute element={<RegisterForm/>} />} />
         <Route path="/providerRegister" element={<ProtectedRoute element={<ProviderRegister/>} />} />
         <Route path="/providerList" element={<ProtectedRoute element={<ProvidersPage/>} />} />
-        <Route path="/productRegister" element={<ProtectedRoute element={<ProductRegister/>} />} />
+        <Route path="/productRegister" element={<ProtectedRoute element={<ProductManagementTabs/>} />} />
         <Route path="/productsList" element={<ProtectedRoute element={<ProductPage/>} />} />
         <Route path="/updateStock" element={<ProtectedRoute element={<UpdateStock/>} />} />
         <Route path="/updatePrice" element={<ProtectedRoute element={<ModifyPrice/>} />} />
         <Route path="/clientRegister" element={<ProtectedRoute element={<ClientRegister/>} />} />
         <Route path="/clientsList" element={<ProtectedRoute element={<ClientsPage/>} />} />
+        <Route path="/buyRegister" element={<ProtectedRoute element={<ProductManagementTabs/>} />} />
+        <Route path="/stocksList" element={<ProtectedRoute element={<StockPage/>} />} />
+        <Route path="/buistHistory" element={<ProtectedRoute element={<PurchasesPage/>} />} />
+
       {/* Redirigir cualquier ruta desconocida a "/login" */}
       <Route path="*" element={<LoginPage />} />
     </Routes>

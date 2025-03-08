@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import apiClient from "../../../Config/axiosConfig";
 
-const useProviders = () => {
+const useProvidersActives = () => {
   const [providers, setProviders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ const useProviders = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await apiClient.get("/providers/getProviders"); 
+      const response = await apiClient.get("/providers/getProvidersActive"); 
       setProviders(response.data);
     } catch (err) {
       setError(err.response?.data?.message || "Error al obtener proveedores");
@@ -27,4 +27,4 @@ const useProviders = () => {
   return { providers, setProviders, loading, error, fetchProviders }; // 🔹 Ahora devuelve `setProviders`
 };
 
-export default useProviders;
+export default useProvidersActives;

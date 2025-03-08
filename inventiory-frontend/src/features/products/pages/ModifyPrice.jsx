@@ -8,11 +8,11 @@ const ModifyPrice = () => {
   const { modifyPrices, loading: modifying, error: modifyError } = useModifyPrice();
 
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const [priceType, setPriceType] = useState(null);
   const [percentage, setPercentage] = useState("");
   const [action, setAction] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+
   // Función para manejar el cambio de porcentaje
   const handlePercentageChange = (event) => {
     setPercentage(event.target.value);
@@ -24,49 +24,41 @@ const ModifyPrice = () => {
     setSuccessMessage(null);
 
     // Validar que todos los datos sean correctos antes de enviar
-    if (selectedProducts.length === 0 || !priceType || !action || percentage === "") {
-      setErrorMessage("⚠️ Seleccione productos, tipo de precio, acción y un porcentaje válido.");
+    if (selectedProducts.length === 0 || !action || percentage === "") {
+      setErrorMessage("⚠️ Seleccione productos, acción y un porcentaje válido.");
       return;
     }
-
-    // Ver datos que se enviarán (depuración)
-    console.log("Enviando datos:", {
-      productIds: selectedProducts.map((p) => p.value),
-      priceType,
-      percentage: parseFloat(percentage),
-      action,
-    });
 
     try {
       await modifyPrices(
         selectedProducts.map((p) => p.value), // IDs de productos
-        priceType, // Tipo de precio ("purchasePrice" o "salePrice")
+        "salePrice", // 🔹 Ahora solo afecta `salePrice`
         parseFloat(percentage), // Convertir a número el porcentaje
         action // "increase" o "discount"
       );
 
       setSuccessMessage(`✅¡Precios ${action === "increase" ? "aumentados" : "reducidos"} correctamente! `);
       setErrorMessage('');
+      
       // Recargar productos con los nuevos precios
       fetchProducts();
 
       // Limpiar campos
       setSelectedProducts([]);
-      setPriceType(null);
       setPercentage("");
       setAction(null);
     } catch (error) {
       console.error("⛔ Error al modificar los precios:", error);
+      setErrorMessage("Error al modificar los precios. Inténtelo nuevamente.");
     }
   };
 
   return (
     <div className="content mt-5 pt-4 d-flex justify-content-center">
       <div className="bg-index container-fluid pb-0 price-container" style={{ maxWidth: "500px" }}>
-       
-
         <div className="card p-4">
-        <h1 className="text-center mb-3">Actualizar Precios %</h1>
+          <h1 className="text-center mb-3">Actualizar Precios %</h1>
+
           {/* Selección de Productos */}
           <label className="form-label">Seleccionar Productos:</label>
           <Select
@@ -79,19 +71,6 @@ const ModifyPrice = () => {
             isClearable
             placeholder="Seleccione productos..."
             value={selectedProducts}
-          />
-
-          {/* Selección de Tipo de Precio */}
-          <label className="form-label mt-3">¿Qué precio desea actualizar?</label>
-          <Select
-            options={[
-              { value: "purchasePrice", label: "Precio de Compra" },
-              { value: "salePrice", label: "Precio de Venta" },
-            ]}
-            onChange={(option) => setPriceType(option ? option.value : null)}
-            isClearable
-            placeholder="Seleccione tipo de precio..."
-            value={priceType ? { value: priceType, label: priceType === "purchasePrice" ? "Precio de Compra" : "Precio de Venta" } : null}
           />
 
           {/* Selección de Acción (Aumento o Descuento) */}
@@ -119,15 +98,14 @@ const ModifyPrice = () => {
 
           {/* Botón de Aplicar */}
           <div className="text-center">
-          <button
-            className="btn btn-confirm mt-3"
-            onClick={handleSubmit}
-            disabled={modifying}
-          >
-            {modifying ? "Modificando..." : "Aplicar"}
-          </button>
+            <button
+              className="btn btn-confirm mt-3"
+              onClick={handleSubmit}
+              disabled={modifying}
+            >
+              {modifying ? "Modificando..." : "Aplicar"}
+            </button>
           </div>
-          
 
           {/* Mensajes de confirmación o error */}
           {successMessage && <p className="text-success text-center mt-3">{successMessage}</p>}

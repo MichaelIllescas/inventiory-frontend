@@ -10,20 +10,25 @@ const EditProductModal = ({ isOpen, onClose, productData, onSubmit }) => {
     code: "",
     name: "",
     description: "",
-    purchasePrice: "",
     salePrice: "",
-    stock: "",
     minStock: "",
     category: "",
-    providerId: "",
+    providerId: "", // Opcional
     brandName: "",
   });
 
   useEffect(() => {
     if (productData && isOpen) {
       setFormData({
-        ...productData,
-        providerId: productData.providerId ? String(productData.providerId) : "", // ✅ Asegurar que sea String válido
+        id: productData.id || "", // 🔹 Mantiene el ID para la edición
+        code: productData.code || "",
+        name: productData.name || "",
+        description: productData.description || "",
+        salePrice: productData.salePrice ? parseFloat(productData.salePrice) : "",
+        minStock: productData.minStock || "",
+        category: productData.category || "",
+        providerId: productData.providerId ? String(productData.providerId) : "",
+        brandName: productData.brandName || "",
       });
     }
   }, [productData, isOpen]);
@@ -34,23 +39,66 @@ const EditProductModal = ({ isOpen, onClose, productData, onSubmit }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validaciones antes de enviar la petición
+    if (!formData.code || formData.code.length > 50) {
+      alert("El código del producto es obligatorio y no debe superar los 50 caracteres.");
+      return;
+    }
+    if (!formData.name || formData.name.length > 100) {
+      alert("El nombre del producto es obligatorio y no debe superar los 100 caracteres.");
+      return;
+    }
+    if (formData.description && formData.description.length > 255) {
+      alert("La descripción no puede superar los 255 caracteres.");
+      return;
+    }
+    if (!formData.salePrice || parseFloat(formData.salePrice) <= 0.01) {
+      alert("El precio de venta es obligatorio y debe ser mayor a 0.01.");
+      return;
+    }
+    if (formData.minStock && parseInt(formData.minStock) < 0) {
+      alert("El stock mínimo no puede ser negativo.");
+      return;
+    }
+    if (!formData.category || formData.category.length > 100) {
+      alert("La categoría es obligatoria y no debe superar los 100 caracteres.");
+      return;
+    }
+    if (formData.brandName && formData.brandName.length > 100) {
+      alert("El nombre de la marca no puede superar los 100 caracteres.");
+      return;
+    }
+
     onSubmit({
       ...formData,
-      providerId: formData.providerId ? Number(formData.providerId) : null, // ✅ Convertir a número antes de enviar
+      salePrice: parseFloat(formData.salePrice),
+      minStock: formData.minStock ? parseInt(formData.minStock) : 0,
+      providerId: formData.providerId ? Number(formData.providerId) : null, // Opcional
     });
   };
 
   return (
-    <Modal show={isOpen} onHide={onClose} centered size="lg"> {/* ✅ Ampliar el modal */}
+    <Modal show={isOpen} onHide={onClose} centered size="lg">
       <Modal.Header closeButton>
         <Modal.Title>Editar Producto</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Row className="g-3"> {/* ✅ Agregar separación entre filas */}
+          <Row className="g-3">
             {/* Primera columna */}
             <Col md={6}>
               <Form.Group>
+                <Form.Label>ID (No editable)</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="id"
+                  value={formData.id}
+                  disabled
+                />
+              </Form.Group>
+
+              <Form.Group className="mt-2">
                 <Form.Label>Código</Form.Label>
                 <Form.Control
                   type="text"
@@ -58,6 +106,7 @@ const EditProductModal = ({ isOpen, onClose, productData, onSubmit }) => {
                   value={formData.code}
                   onChange={handleChange}
                   required
+                  maxLength={50}
                 />
               </Form.Group>
 
@@ -69,6 +118,7 @@ const EditProductModal = ({ isOpen, onClose, productData, onSubmit }) => {
                   value={formData.name}
                   onChange={handleChange}
                   required
+                  maxLength={100}
                 />
               </Form.Group>
 
@@ -79,54 +129,23 @@ const EditProductModal = ({ isOpen, onClose, productData, onSubmit }) => {
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
+                  maxLength={255}
                 />
               </Form.Group>
 
-              <Form.Group className="mt-2">
-                <Form.Label>Precio de Compra</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="purchasePrice"
-                  value={formData.purchasePrice}
-                  onChange={handleChange}
-                  required
-                  step="0.01"
-                />
-              </Form.Group>
-
-              <Form.Group className="mt-2">
-                <Form.Label>Precio de Venta</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="salePrice"
-                  value={formData.salePrice}
-                  onChange={handleChange}
-                  required
-                  step="0.01"
-                />
-              </Form.Group>
+            
             </Col>
 
             {/* Segunda columna */}
             <Col md={6}>
               <Form.Group>
-                <Form.Label>Stock</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="stock"
-                  value={formData.stock}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group className="mt-2">
                 <Form.Label>Stock mínimo</Form.Label>
                 <Form.Control
                   type="number"
                   name="minStock"
                   value={formData.minStock}
                   onChange={handleChange}
+                  min="0"
                 />
               </Form.Group>
 
@@ -137,6 +156,8 @@ const EditProductModal = ({ isOpen, onClose, productData, onSubmit }) => {
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
+                  required
+                  maxLength={100}
                 />
               </Form.Group>
 
@@ -147,25 +168,23 @@ const EditProductModal = ({ isOpen, onClose, productData, onSubmit }) => {
                   name="brandName"
                   value={formData.brandName}
                   onChange={handleChange}
+                  maxLength={100}
+                />
+              </Form.Group>
+              <Form.Group className="mt-2">
+                <Form.Label>Precio de Venta</Form.Label>
+                <Form.Control
+                  type="number"
+                  name="salePrice"
+                  value={formData.salePrice}
+                  onChange={handleChange}
+                  required
+                  step="0.01"
+                  min="0.01"
                 />
               </Form.Group>
 
-              <Form.Group className="mt-2">
-                <Form.Label>Proveedor</Form.Label>
-                <Form.Select
-                  name="providerId"
-                  value={formData.providerId}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value={formData.id}>Seleccione un proveedor</option>
-                  {providers.map((p) => (
-                    <option key={p.id} value={String(p.id)}>
-                      {p.businessName}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
+            
             </Col>
           </Row>
 
