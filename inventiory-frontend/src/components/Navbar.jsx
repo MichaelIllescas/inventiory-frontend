@@ -14,8 +14,10 @@ import {
   Package,
   RefreshCcw,
   LucideTrendingUpDown,
-  UserCheck ,
-  ShoppingCart,ClipboardList
+  UserCheck,
+  ShoppingCart,
+  ClipboardList,
+  DollarSign 
 } from "lucide-react";
 import "../styles/nav.css";
 const handleLogout = async () => {
@@ -63,7 +65,7 @@ const Navbar = () => {
                 icon={List}
                 text="Lista de Productos"
               />
-              
+
               <NavbarItem
                 url="/updatePrice"
                 icon={LucideTrendingUpDown}
@@ -84,10 +86,10 @@ const Navbar = () => {
               />
             </NavbarDropdown>
             {/* clients managenent */}
-            <NavbarDropdown text="Clientes" icon={UserCheck }>
+            <NavbarDropdown text="Clientes" icon={UserCheck}>
               <NavbarItem
                 url="/clientRegister"
-                icon={UserCheck }
+                icon={UserCheck}
                 text="Registrar Cliente"
               />
               <NavbarItem
@@ -96,11 +98,11 @@ const Navbar = () => {
                 text="Lista de Clientes"
               />
             </NavbarDropdown>
-               {/* stocks managenent */}
-               <NavbarDropdown text="Stocks" icon={ClipboardList }>
+            {/* stocks managenent */}
+            <NavbarDropdown text="Stocks" icon={ClipboardList}>
               <NavbarItem
                 url="/stocksList"
-                icon={ClipboardList }
+                icon={ClipboardList}
                 text="Ver Stcoks"
               />
               <NavbarItem
@@ -109,9 +111,6 @@ const Navbar = () => {
                 text="Actualizar Stocks"
               />
             </NavbarDropdown>
-
-           
-
             {/* buys managenent */}
             <NavbarDropdown text="Compras" icon={ShoppingCart}>
               <NavbarItem
@@ -123,6 +122,32 @@ const Navbar = () => {
                 url="/buistHistory"
                 icon={List}
                 text="Historial de Compras"
+              />
+            </NavbarDropdown>
+            {/* Expenses managenent */}
+            <NavbarDropdown text="Gastos" icon={DollarSign}>
+              <NavbarItem
+                url="/expenseRegister"
+                icon={Truck}
+                text="Registrar Gasto"
+              />
+              <NavbarItem
+                url="/expensesList"
+                icon={List}
+                text="Lista de Gastos"
+              />
+            </NavbarDropdown>
+            {/* users managenent */}
+            <NavbarDropdown text="Usuarios" icon={Users}>
+              <NavbarItem
+                url="/userRegister"
+                icon={UserPlus}
+                text="Registrar Usuario"
+              />
+              <NavbarItem
+                url="/userList"
+                icon={List}
+                text="Lista de Usuarios"
               />
             </NavbarDropdown>
           </ul>
