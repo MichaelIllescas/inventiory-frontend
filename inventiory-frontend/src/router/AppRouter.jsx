@@ -45,6 +45,8 @@ export const AppRoutes = () => {
         <Route path="/buistHistory" element={<ProtectedRoute element={<PurchasesPage/>} />} />
         <Route path="/expensesList" element={<ProtectedRoute element={<ExpensesPage/>} />} />
         <Route path="/expenseRegister" element={<ProtectedRoute element={<ExpenseRegister/>} />} />
+
+
       {/* Redirigir cualquier ruta desconocida a "/login" */}
       <Route path="*" element={<LoginPage />} />
     </Routes>

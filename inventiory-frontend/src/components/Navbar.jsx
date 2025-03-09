@@ -17,7 +17,7 @@ import {
   UserCheck,
   ShoppingCart,
   ClipboardList,
-  DollarSign 
+  DollarSign,
 } from "lucide-react";
 import "../styles/nav.css";
 const handleLogout = async () => {
@@ -123,6 +123,7 @@ const Navbar = () => {
                 icon={List}
                 text="Historial de Compras"
               />
+         
             </NavbarDropdown>
             {/* Expenses managenent */}
             <NavbarDropdown text="Gastos" icon={DollarSign}>
