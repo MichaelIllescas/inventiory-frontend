@@ -16,6 +16,9 @@ import ClientsPage from "../features/clients/pages/ClientsPage";
 import ProductManagementTabs from "../features/buys/pages/ProductManagementTabs";
 import StockPage from "../features/stocks/pages/StockPage";
 import PurchasesPage from "../features/buys/pages/PurchasesPage";
+import ExpensesPage from "../features/expenses/pages/ExpensesPage";
+import ExpenseRegister from "../features/expenses/pages/ExpenseRegister";
+
 
 export const AppRoutes = () => {
   return (
@@ -40,6 +43,9 @@ export const AppRoutes = () => {
         <Route path="/buyRegister" element={<ProtectedRoute element={<ProductManagementTabs/>} />} />
         <Route path="/stocksList" element={<ProtectedRoute element={<StockPage/>} />} />
         <Route path="/buistHistory" element={<ProtectedRoute element={<PurchasesPage/>} />} />
+        <Route path="/expensesList" element={<ProtectedRoute element={<ExpensesPage/>} />} />
+        <Route path="/expenseRegister" element={<ProtectedRoute element={<ExpenseRegister/>} />} />
+
 
       {/* Redirigir cualquier ruta desconocida a "/login" */}
       <Route path="*" element={<LoginPage />} />
