@@ -13,12 +13,15 @@ const UserMenu = ({ handleLogout }) => {
   return (
     <>
       <NavbarDropdown text="Usuario" icon={UserCircle}>
+        <hr />
         <NavbarItem url="/config" icon={Settings} text="Configuración" />
+        <hr />
         <NavbarItem
           url="/downloadManual"
           icon={FileText}
           text="Descargar Manual"
         />
+        <hr />
 
         {/* Botón para abrir el modal */}
         <li className="text-center">
@@ -30,6 +33,7 @@ const UserMenu = ({ handleLogout }) => {
             <LogOut className="me-2" size={18} /> Cerrar Sesión
           </button>
         </li>
+        <hr />
       </NavbarDropdown>
 
       {/* Modal de Confirmación de Cierre de Sesión */}
