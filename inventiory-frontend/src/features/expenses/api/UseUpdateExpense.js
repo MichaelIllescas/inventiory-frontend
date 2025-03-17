@@ -8,18 +8,25 @@ const useUpdateExpense = () => {
   const updateExpense = async (expenseData) => {
     setLoading(true);
     setError(null);
+
     try {
-      const { id, ...sanitizedData } = expenseData; // Extraemos el ID y enviamos solo los datos necesarios
+      const { id, date, ...sanitizedData } = expenseData;
+
+      // ✅ Verificar que `date` no sea null antes de enviar la solicitud
+      if (!date) {
+        throw new Error("La fecha del gasto es obligatoria.");
+      }
 
       const response = await apiClient.put(
         `/expenses/${id}`, // ✅ ID en la URL
-        sanitizedData       // ✅ Solo los datos válidos en el body
+        { date, ...sanitizedData } // ✅ Asegura que `date` esté presente en el body
       );
 
       return response.data;
     } catch (err) {
-      setError(err.response?.data?.error || "Error al actualizar el gasto");
-      throw new Error(err.response?.data?.error || "Error al actualizar el gasto");
+      const errorMessage = err.response?.data?.error || "Error al actualizar el gasto";
+      setError(errorMessage);
+      throw new Error(errorMessage);
     } finally {
       setLoading(false);
     }
