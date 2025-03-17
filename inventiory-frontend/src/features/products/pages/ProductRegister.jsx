@@ -119,6 +119,7 @@ const ProductRegister = ({ setActiveTab, setPreselectedProduct }) => {
             </button>
           </div>
         )}
+        
       </div>
     </div>
   );

@@ -20,11 +20,8 @@ const useProducts = () => {
     }
   };
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
-  return { products, setProducts, loading, error, fetchProducts }; // 🔹 Ahora `setProducts` está disponible
+  return { products, setProducts, loading, error, fetchProducts }; 
 };
 
 export default useProducts;

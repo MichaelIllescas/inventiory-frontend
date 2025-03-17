@@ -8,6 +8,7 @@ const SelectProduct = ({ onProductoSeleccionado, productosSeleccionados }) => {
 
   // Actualiza la lista de productos disponibles cuando cambia la lista de productos seleccionados
   useEffect(() => {
+    
     setAvailableProducts(
       products.filter(
         (product) => !productosSeleccionados.some((p) => p.id === product.id)

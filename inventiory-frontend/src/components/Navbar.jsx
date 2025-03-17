@@ -162,7 +162,7 @@ const Navbar = () => {
               />
               <hr />
               <NavbarItem
-                url="/expensesList"
+                url="/salesList"
                 icon={List}
                 text="Historial de Ventas"
               />

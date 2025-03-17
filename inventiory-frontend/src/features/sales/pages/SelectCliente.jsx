@@ -3,9 +3,12 @@ import Select from "react-select";
 import useClients from "../../clients/api/UseClients";
 
 const SelectCliente = ({ onClienteSeleccionado, clienteSeleccionado }) => {
-  const { clients, loading, error } = useClients();
+  const { clients, loading, error, fetchClients } = useClients();
   const [availableClients, setAvailableClients] = useState([]);
-
+  useEffect(() => {
+    fetchClients();
+  }, []);
+  
   useEffect(() => {
     setAvailableClients(
       clients.filter(

@@ -19,6 +19,7 @@ import PurchasesPage from "../features/buys/pages/PurchasesPage";
 import ExpensesPage from "../features/expenses/pages/ExpensesPage";
 import ExpenseRegister from "../features/expenses/pages/ExpenseRegister";
 import SaleRegister from "../features/sales/pages/SaleRegister";
+import SalesPage from "../features/sales/pages/SalesPage";
 
 export const AppRoutes = () => {
   return (
@@ -46,6 +47,7 @@ export const AppRoutes = () => {
         <Route path="/expensesList" element={<ProtectedRoute element={<ExpensesPage/>} />} />
         <Route path="/expenseRegister" element={<ProtectedRoute element={<ExpenseRegister/>} />} />
         <Route path="/saleRegister" element={<ProtectedRoute element={<SaleRegister />} />} />
+        <Route path="/salesList" element={<ProtectedRoute element={<SalesPage/>} />} />
 
 
       {/* Redirigir cualquier ruta desconocida a "/login" */}
