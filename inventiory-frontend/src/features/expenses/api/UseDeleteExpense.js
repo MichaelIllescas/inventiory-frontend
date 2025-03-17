@@ -9,7 +9,7 @@ const useDeleteExpense = () => {
     setLoading(true);
     setError(null);
     try {
-      await apiClient.delete(`/expenses/${id}`); // ✅ Endpoint correcto
+      await apiClient.delete(`/expenses/${id}`); 
     } catch (err) {
       setError(err.response?.data?.error || "Error al eliminar el gasto");
       throw new Error(err.response?.data?.error || "Error al eliminar el gasto");

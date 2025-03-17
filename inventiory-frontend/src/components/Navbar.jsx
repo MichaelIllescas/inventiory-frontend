@@ -137,7 +137,7 @@ const Navbar = () => {
                 text="Historial de Compras"
               />
               <hr />
-              <li className="text-center">Otros Gastos  </li><hr />
+              <li className="mx-5">Otros Gastos  </li><hr />
               <NavbarItem
                 url="/expenseRegister"
                 icon={DollarSign}

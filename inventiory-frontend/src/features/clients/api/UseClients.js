@@ -20,10 +20,7 @@ const useClients = () => {
     }
   };
 
-  // Llamamos a fetchClients cuando el componente se monta
-  useEffect(() => {
-    fetchClients();
-  }, []);
+
 
   return { clients, loading, error, fetchClients }; 
 };
