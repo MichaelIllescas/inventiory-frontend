@@ -14,8 +14,8 @@ const useDelete = () => {
       const response = await apiClient.delete(`/sales/delete/${id}`);
       return response;
     } catch (err) {
-        setError(err.response?.data?.message || "Error al eliminar la venta");
-        return { error: err.response?.data?.message || "Error al eliminar la venta" }; 
+        setError(err.response?.data?.error || "Error al eliminar la venta");
+        return { error: err.response?.data?.error || "Error al eliminar la venta" }; 
     } finally {
       setLoading(false);
     }

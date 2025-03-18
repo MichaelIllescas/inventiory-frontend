@@ -147,6 +147,7 @@ const ProductPage = () => {
       </div>
       <EditProductModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} productData={selectedProduct} onSubmit={handleSave} />
       <ProductDetailsModal isOpen={isDetailsModalOpen} onClose={() => setIsDetailsModalOpen(false)} product={selectedProduct} />
+   
       <Modal show={isConfirmModalOpen} onHide={() => setIsConfirmModalOpen(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Confirmar Cambio de Estado</Modal.Title>

@@ -35,7 +35,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg fixed-top  ">
       <div className="container">
-        <Link to="/index" className="navbar-brand">
+        <Link to="/dashboard" className="navbar-brand">
           <img
             src={logo}
             width="55"
@@ -75,12 +75,12 @@ const Navbar = () => {
                 text="Ver Stcoks"
               />
               <hr />
-              <NavbarItem
-                url="/updateStock"
-                icon={RefreshCcw}
-                text="Actualizar Stocks"
-              />
-              <hr />
+                {/* <NavbarItem
+                  url="/updateStock"
+                  icon={RefreshCcw}
+                  text="Actualizar Stocks"
+                />
+                <hr /> */}
 
               <NavbarItem
                 url="/updatePrice"

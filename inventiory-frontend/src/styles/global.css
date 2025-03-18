@@ -86,3 +86,34 @@ main {
     transform: rotate(360deg);
   }
 }
+
+.div-filter input{
+  margin: 0 10px 0 0;
+}
+@media (max-width: 576px) {
+  
+  .div-filter{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+  
+  }
+  .div-filter div{
+    flex-wrap: wrap;
+  }
+  .div-btn-filter{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .div-inputs-filter{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  
+  }
+ 
+}
