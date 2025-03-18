@@ -18,7 +18,13 @@ import {
   ShoppingCart,
   ClipboardList,
   DollarSign,
-  ShoppingBag 
+  ShoppingBag ,
+  LineChart ,
+  Table , 
+  BarChart ,
+  Calendar ,
+  LucideChartBarIncreasing,
+  LucideChartBarStacked
 } from "lucide-react";
 import "../styles/nav.css";
 const handleLogout = async () => {
@@ -168,6 +174,52 @@ const Navbar = () => {
               />
            <hr />
             </NavbarDropdown>
+
+            {/* Repots managenent */}
+            <NavbarDropdown text="Reportes" icon={LineChart }>
+                          <hr />
+                          <NavbarItem
+                            url="/dailyincome"
+                            icon={Table }
+                            text="Ingresos diarios"
+                          />
+                          <hr />
+                          <NavbarItem
+                            url="/monthlyIncome"
+                            icon={BarChart }
+                            text="Ingresos Mensuales"
+                          />
+                      <hr />
+                      <NavbarItem
+                            url="/anualIncome"
+                            icon={Calendar  }
+                            text="Ingresos Anuales"
+                          />
+                      <hr />
+                      <NavbarItem
+                            url="/topCustomers"
+                            icon={LucideChartBarStacked  }
+                            text="Ranking de Clientes"
+                          />
+                      <hr />
+                      <NavbarItem
+                            url="/topProducts"
+                            icon={LucideChartBarIncreasing  }
+                            text="Ranking de Productos"
+                          />
+                      <hr />
+                      <NavbarItem
+                            url="/profiability"
+                            icon={LucideChartBarIncreasing  }
+                            text="Rentabilidad"
+                          />
+                      <hr />
+            </NavbarDropdown>
+
+
+
+
+
             {/* users managenent */}
             <NavbarDropdown text="Usuarios" icon={Users}>
               <hr />

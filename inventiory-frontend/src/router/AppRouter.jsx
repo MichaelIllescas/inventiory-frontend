@@ -20,6 +20,12 @@ import ExpensesPage from "../features/expenses/pages/ExpensesPage";
 import ExpenseRegister from "../features/expenses/pages/ExpenseRegister";
 import SaleRegister from "../features/sales/pages/SaleRegister";
 import SalesPage from "../features/sales/pages/SalesPage";
+import DailyIcomePage from "../features/reports/pages/DailyIcomePage";
+import MonthlyIncomePage from "../features/reports/pages/MonthlyIncomePage";
+import AnnualIncomePage from "../features/reports/pages/AnnualIncomePage";
+import TopCustomersPage from "../features/reports/pages/TopCustomersPage";
+import TopSellingProductsPage from "../features/reports/pages/TopSellingProductsPage";
+import ProfitabilityPage from "../features/reports/pages/ProfitabilityPage";
 
 export const AppRoutes = () => {
   return (
@@ -48,6 +54,13 @@ export const AppRoutes = () => {
         <Route path="/expenseRegister" element={<ProtectedRoute element={<ExpenseRegister/>} />} />
         <Route path="/saleRegister" element={<ProtectedRoute element={<SaleRegister />} />} />
         <Route path="/salesList" element={<ProtectedRoute element={<SalesPage/>} />} />
+        <Route path="/dailyincome" element={<ProtectedRoute element={<DailyIcomePage/>} />} />
+        <Route path="/monthlyIncome" element={<ProtectedRoute element={<MonthlyIncomePage/>} />} />
+        <Route path="/anualIncome" element={<ProtectedRoute element={<AnnualIncomePage/>} />} />
+        <Route path="/topCustomers" element={<ProtectedRoute element={<TopCustomersPage/>} />} />
+
+        <Route path="/topProducts" element={<ProtectedRoute element={<TopSellingProductsPage/>} />} />
+        <Route path="/profiability" element={<ProtectedRoute element={<ProfitabilityPage/>} />} />
 
 
       {/* Redirigir cualquier ruta desconocida a "/login" */}
