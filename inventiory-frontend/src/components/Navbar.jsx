@@ -24,7 +24,8 @@ import {
   BarChart ,
   Calendar ,
   LucideChartBarIncreasing,
-  LucideChartBarStacked
+  LucideChartBarStacked,
+  PilcrowRight
 } from "lucide-react";
 import "../styles/nav.css";
 const handleLogout = async () => {
@@ -210,7 +211,7 @@ const Navbar = () => {
                       <hr />
                       <NavbarItem
                             url="/profiability"
-                            icon={LucideChartBarIncreasing  }
+                            icon={PilcrowRight  }
                             text="Rentabilidad"
                           />
                       <hr />

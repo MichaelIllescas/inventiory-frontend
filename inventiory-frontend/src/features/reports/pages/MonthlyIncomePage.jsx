@@ -15,18 +15,14 @@ const MonthlyIncomePage = () => {
   const safeIncome = income || {
     grossIncome: 0,
     totalCost: 0,
-    totalDiscount: 0,
     grossProfit: 0,
-    netProfit: 0
   };
 
   // Datos para la gráfica
   const data = [
     { name: "Ingresos Brutos", value: safeIncome.grossIncome },
     { name: "Costo Total", value: safeIncome.totalCost },
-    { name: "Descuento Aplicado", value: safeIncome.totalDiscount },
-    { name: "Ganancia Bruta", value: safeIncome.grossProfit },
-    { name: "Ganancia Neta", value: safeIncome.netProfit },
+    { name: "Ganancia Neta", value: safeIncome.grossProfit },
   ];
 
   return (
@@ -80,23 +76,14 @@ const MonthlyIncomePage = () => {
                   </div>
                   <p className="text-muted">Costo de compra de los productos vendidos en el mes.</p>
 
+                 
                   <div className="d-flex justify-content-between border-bottom py-2">
-                    <h6 className="fw-bold">Descuento Aplicado:</h6>
-                    <p className="fw-bold text-danger mb-0">${(safeIncome.totalDiscount ?? 0).toLocaleString()}</p>
-                  </div>
-                  <p className="text-muted">Total de descuentos aplicados en las ventas del mes.</p>
-
-                  <div className="d-flex justify-content-between border-bottom py-2">
-                    <h6 className="fw-bold">Ganancia Bruta:</h6>
+                    <h6 className="fw-bold">Ganancia Neta:</h6>
                     <p className="fw-bold text-success mb-0">${(safeIncome.grossProfit ?? 0).toLocaleString()}</p>
                   </div>
                   <p className="text-muted">Total Vendido menos el Costo Total.</p>
 
-                  <div className="d-flex justify-content-between border-bottom py-2">
-                    <h6 className="fw-bold">Ganancia Neta:</h6>
-                    <p className="fw-bold text-info mb-0">${(safeIncome.netProfit ?? 0).toLocaleString()}</p>
-                  </div>
-                  <p className="text-muted">Ganancia Bruta menos Descuentos Aplicados.</p>
+                
                 </div>
               </div>
             </>

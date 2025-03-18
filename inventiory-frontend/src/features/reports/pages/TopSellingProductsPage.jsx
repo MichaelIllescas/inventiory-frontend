@@ -56,7 +56,7 @@ const TopSellingProductsPage = () => {
                     <th>Producto</th>
                     <th>Código</th>
                     <th>Cantidad Vendida</th>
-                    <th>Total Generado</th>
+                    <th>Total Generado(Bruto)</th>
                   </tr>
                 </thead>
                 <tbody>
