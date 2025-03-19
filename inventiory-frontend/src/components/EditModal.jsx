@@ -91,13 +91,13 @@ const EditModal = ({ isOpen, onClose, data, onSubmit }) => {
             />
           </Form.Group>
 
-          <Form.Group>
-            <Form.Label>Estado</Form.Label>
-            <Form.Select name="state" value={formData.state || ""} onChange={handleChange}>
-              <option value="ACTIVO">ACTIVO</option>
-              <option value="INACTIVO">INACTIVO</option>
-            </Form.Select>
-          </Form.Group>
+            <Form.Group>
+              <Form.Label>Estado</Form.Label>
+              <Form.Select name="state" value={formData.state || ""} onChange={handleChange}>
+                <option value="ACTIVO">ACTIVO</option>
+                <option value="INACTIVO">INACTIVO</option>
+              </Form.Select>
+            </Form.Group>
 
           <Form.Group>
             <Form.Label>Rol</Form.Label>

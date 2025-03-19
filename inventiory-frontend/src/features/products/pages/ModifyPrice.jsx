@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import useFetchProducts from "../api/useProducts";
 import useModifyPrice from "../api/useModifyPrice";
@@ -13,6 +13,9 @@ const ModifyPrice = () => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  useEffect(() => {
+    fetchProducts(); 
+  }, []); 
   // Función para manejar el cambio de porcentaje
   const handlePercentageChange = (event) => {
     setPercentage(event.target.value);
