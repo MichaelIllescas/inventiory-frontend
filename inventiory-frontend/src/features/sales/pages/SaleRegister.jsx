@@ -9,6 +9,7 @@ const SaleRegister = () => {
   const [cliente, setCliente] = useState(null);
   const [productsSelected, setProductsSelected] = useState([]); // Productos seleccionados por el usuario
   const [descuento, setDescuento] = useState(0);
+  const [aumento, setAumento] = useState(0);
   const [total, setTotal] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState("");
   const { registerSale, loading, error, success } = useRegisterSale();
@@ -27,20 +28,19 @@ const SaleRegister = () => {
       discount: descuento,
       paymentMethod,
       clientId: cliente ? cliente.id : null,
+      extra_charge_percentage: aumento,
     });
-
-    
   };
   useEffect(() => {
     if (success) {
       setCliente(null);
       setProductsSelected([]);
       setDescuento(0);
+      setDescuento(0);
       setTotal(0);
       setPaymentMethod("");
     }
   }, [success]); // Se ejecuta cuando `success` cambia
-  
 
   const handleClienteSeleccionado = (clienteSeleccionado) => {
     setCliente(clienteSeleccionado); // Almacena todo el objeto cliente
@@ -114,16 +114,20 @@ const SaleRegister = () => {
       0
     );
 
-    // Asegurar que el descuento se aplica correctamente
     const descuentoAplicado = Math.min(parseFloat(descuento) || 0, 100);
-    const descuentoValor = (descuentoAplicado / 100) * subtotal; // Se aplica correctamente el porcentaje
+    const descuentoValor = (descuentoAplicado / 100) * subtotal;
 
-    setTotal((subtotal - descuentoValor).toFixed(2));
+    const aumentoAplicado = Math.min(parseFloat(aumento) || 0, 100);
+    const aumentoValor = (aumentoAplicado / 100) * subtotal;
+
+    const totalCalculado = subtotal - descuentoValor + aumentoValor;
+
+    setTotal(totalCalculado.toFixed(2));
   };
 
   useEffect(() => {
     actualizarTotal(productsSelected);
-  }, [descuento, productsSelected]); // Se ejecuta cuando cambia descuento o la lista de productos
+  }, [descuento, aumento, productsSelected]); // Se ejecuta cuando cambia descuento o la lista de productos
 
   if (loading) return <LoadingScreen />;
   return (
@@ -133,7 +137,7 @@ const SaleRegister = () => {
         <div className="col-md-6 mt-2">
           <div className="card shadow-sm">
             <div className="card-body">
-              <h4 className="card-title">Registrar Cliente</h4>
+              <h4 className="card-title">Seleccionar Cliente</h4>
 
               {/* Select Cliente */}
               <SelectCliente
@@ -162,7 +166,7 @@ const SaleRegister = () => {
                   <hr />
                 </>
               ) : (
-                <p>No registrado</p>
+                <p>No Asignado</p>
               )}
             </div>
           </div>
@@ -230,7 +234,7 @@ const SaleRegister = () => {
               </ul>
               <hr />
 
-              <h4 className="mt-3">Aplicar Descuento</h4>
+              <h4 className="mt-3">Aplicar Descuento (%)</h4>
               <div className="mb-3">
                 <input
                   type="number"
@@ -242,12 +246,24 @@ const SaleRegister = () => {
               </div>
               <hr />
 
+              <h4 className="mt-3">Aplicar Recargo (%)</h4>
+              <div className="mb-3">
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="Ingrese aumento (%)"
+                  value={aumento}
+                  onChange={(e) => setAumento(e.target.value)}
+                />
+              </div>
+              <hr />
+
               <h4 className="mt-3">Total: ${total}</h4>
 
               <hr />
               <h4 className="mt-3">Modalidad de Pago</h4>
               <div className="mb-3">
-                <select
+                <select required
                   className="form-select"
                   value={paymentMethod}
                   onChange={(e) => setPaymentMethod(e.target.value)}
@@ -276,11 +292,11 @@ const SaleRegister = () => {
               <hr />
               {success && (
                 <div className="alert alert-success mt-3 text-center">
-                <CheckCircle className="me-2" /> ¡Venta registrada exitosamente!
-              </div>
+                  <CheckCircle className="me-2" /> ¡Venta registrada
+                  exitosamente!
+                </div>
               )}
               {/* Confirmación */}
-       
 
               {error && (
                 <div className="alert alert-danger mt-3" role="alert">

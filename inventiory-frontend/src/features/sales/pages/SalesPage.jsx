@@ -59,7 +59,7 @@ const SalesPage = () => {
               🔍
             </button>
 
-            {/* Switch para cambiar estado */}
+            {/* Switch para cambiar estado
             <div className="form-check form-switch d-flex justify-content-center">
               <input
                 className="form-check-input my-2 "
@@ -68,7 +68,7 @@ const SalesPage = () => {
                 checked={row.original.status === "CONFIRMED"}
                 onChange={() => handleConfirmToggle(row.original)}
               />
-            </div>
+            </div> */}
 
             {/* Botón para eliminar venta */}
             <button

@@ -90,7 +90,7 @@ const DetailsModal = ({ isOpen, onClose, data }) => {
             <tfoot>
               <tr>
                 <td colSpan="5" className="text-end px-4">
-                 <strong>Decuentos: </strong> {data.discountApplied}% <strong className=" mx-2">Total:</strong> ${data.totalSale.toFixed(2)}
+                <strong className="mx-1">Recargos: </strong>{data.extra_charge_percentage}%   <strong className="mx-1">Decuentos: </strong> {data.discountApplied}% <strong className=" mx-2">Total:</strong> ${data.totalSale.toFixed(2)}
                 </td>
               </tr>
             </tfoot>

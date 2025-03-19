@@ -1,15 +1,16 @@
 import { useState } from "react";
 import axios from "axios";
+import apiClient from "../../../Config/axiosConfig";
 
 const useCancelPurchase = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const cancelPurchase = async (id) => {
+  const deletePurchase = async (id) => {
     setLoading(true);
     setError(null);
     try {
-      await axios.put(`/api/purchases/cancel/${id}`);
+      await apiClient.delete(`/purchases/delete/${id}`);
     } catch (err) {
       setError(err);
       throw err;
@@ -18,7 +19,7 @@ const useCancelPurchase = () => {
     }
   };
 
-  return { cancelPurchase, loading, error };
+  return { deletePurchase, loading, error };
 };
 
 export default useCancelPurchase;

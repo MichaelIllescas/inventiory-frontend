@@ -105,7 +105,7 @@ const ProductRegister = ({ setActiveTab, setPreselectedProduct }) => {
             </div>
           </div>
 
-          <div className="text-center mt-4 pt-1" data-aos="fade-up">
+          <div className="text-center mt-4 pt-1" >
             <button type="submit" className="btn btn-confirm">Registrar</button>
           </div>
         </form>

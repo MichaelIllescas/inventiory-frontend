@@ -9,6 +9,7 @@ import PurchaseDetailsModal from "./PurchaseDetailsModal";
 import ToastMessage from "../../../components/ToastMessage";
 import { Modal, Button } from "react-bootstrap";
 import { FaEye, FaEdit, FaToggleOn, FaToggleOff } from "react-icons/fa";
+import useCancelPurchase from "../api/useCancelPurchase";
 
 const PurchasesPage = () => {
   const { purchases, loading, error, fetchPurchases, setPurchases } =
@@ -17,11 +18,13 @@ const PurchasesPage = () => {
   const { toggleStatus } = useTogglePurchaseStatus();
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [selectedPurchase, setSelectedPurchase] = useState(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const{ deletePurchase} = useCancelPurchase();
   const [filteredPurchases, setFilteredPurchases] = useState(purchases);
   const [toast, setToast] = useState({
     show: false,
@@ -141,6 +144,54 @@ const PurchasesPage = () => {
     setFilteredPurchases(purchases); // Restablece la lista con todas las compras
   };
 
+  const handleClickDelete = (sale) => {
+    setSelectedPurchase(sale);
+    setIsConfirmDeleteModalOpen(true);
+  };
+  const handleDeleteSale = async () => {
+    try {
+      if (!selectedPurchase) return;
+
+        const response = await deletePurchase(selectedPurchase.id);
+
+       if (response?.error) {
+      throw new Error(response.error); // Capturar el mensaje del backend
+       }
+
+      setToast({
+        show: true,
+        title: "Éxito",
+        message: `Compra eliminada correctamente`,
+        variant: "success",
+      });
+
+      setIsConfirmDeleteModalOpen(false);
+      fetchPurchases();
+    } catch (error) {
+      let errorMessage =
+        "No se pudo eliminar la compra, intente nuevamente más tarde.";
+
+      // 🔹 Extraer mensaje del backend si está en `error.response.data.error`
+      if (error.response && error.response.data && error.response.data.error) {
+        errorMessage = error.response.data.error;
+      }
+      // 🔹 Si el backend no responde con `error`, verificar `error.message`
+      else if (error.message) {
+        errorMessage = error.message;
+      }
+
+      setToast({
+        show: true,
+        title: "Error",
+        message: errorMessage,
+        variant: "danger",
+      });
+
+      setIsConfirmDeleteModalOpen(false);
+    }
+  };
+
+
   const columns = useMemo(
     () => [
       { Header: "PRDUCTO", accessor: "productName" },
@@ -165,20 +216,20 @@ const PurchasesPage = () => {
         Cell: ({ row }) => (
           <div className="d-flex justify-content-center gap-2">
             <button
-              className="btn btn-info btn-sm"
+              className="btn btn-info"
               onClick={() => handleViewDetails(row.original.id)}
               title="Ver Detalles"
             >
               <FaEye />
             </button>
             <button
-              className="btn btn-primary btn-sm"
+              className="btn btn-primary "
               onClick={() => handleEdit(row.original.id)}
               title="Editar Compra"
             >
               <FaEdit />
             </button>
-            <button
+            {/* <button
               className={`btn btn-${
                 row.original.state === "ACTIVO" ? "danger" : "success"
               } btn-sm`}
@@ -190,6 +241,15 @@ const PurchasesPage = () => {
               ) : (
                 <FaToggleOff />
               )}
+            </button> */}
+            
+            {/* Botón para eliminar venta */}
+            <button
+              className="btn btn-danger"
+              title="Eliminar Registro"
+              onClick={() => handleClickDelete(row.original)}
+            >
+              🗑️
             </button>
           </div>
         ),
@@ -252,7 +312,7 @@ const PurchasesPage = () => {
         purchase={selectedPurchase}
       />
 
-      <Modal
+      {/* <Modal
         show={isConfirmModalOpen}
         onHide={() => setIsConfirmModalOpen(false)}
         centered
@@ -281,7 +341,30 @@ const PurchasesPage = () => {
             {selectedPurchase?.state === "ACTIVO" ? "Anular" : "Activar"}
           </Button>
         </Modal.Footer>
+      </Modal> */}
+
+<Modal
+        show={isConfirmDeleteModalOpen}
+        onHide={() => setIsConfirmDeleteModalOpen(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar Eliminación de la compra</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>¿Está seguro de que desea eliminar esta compra?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setIsConfirmDeleteModalOpen(false)}
+          >
+            Cancelar
+          </Button>
+          <Button variant="danger" onClick={handleDeleteSale}>
+            Eliminar
+          </Button>
+        </Modal.Footer>
       </Modal>
+
 
       <ToastMessage
         show={toast.show}
