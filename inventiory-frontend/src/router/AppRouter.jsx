@@ -27,6 +27,7 @@ import TopCustomersPage from "../features/reports/pages/TopCustomersPage";
 import TopSellingProductsPage from "../features/reports/pages/TopSellingProductsPage";
 import ProfitabilityPage from "../features/reports/pages/ProfitabilityPage";
 import ChangePassword from "../features/users/pages/changePassword";
+import PerfilManagemetnTabs from "../features/users/pages/PerfilManagementTabs";
 
 export const AppRoutes = () => {
   return (
@@ -63,6 +64,8 @@ export const AppRoutes = () => {
         <Route path="/topProducts" element={<ProtectedRoute element={<TopSellingProductsPage/>} />} />
         <Route path="/profiability" element={<ProtectedRoute element={<ProfitabilityPage/>} />} />
         <Route path="/changePassword" element={<ProtectedRoute element={<ChangePassword/>} />} />
+        <Route path="/configuration" element={<ProtectedRoute element={<PerfilManagemetnTabs/>} />} />
+
 
       {/* Redirigir cualquier ruta desconocida a "/login" */}
       <Route path="*" element={<LoginPage />} />

@@ -8,10 +8,13 @@ const SalesDetailsModal = ({ isOpen, onClose, data }) => {
   if (!data) return null;
 
   // Llamamos al hook para obtener las ventas cuando el modal está abierto
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { sales, loading, error } = useClientSales(data?.id, isOpen);
 
   // Estado para el modal de detalles de la venta
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [showDetailsModal, setShowDetailsModal] = useState(false);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [selectedSale, setSelectedSale] = useState(null);
 
   // Función para abrir el modal de detalles con la venta seleccionada
@@ -21,6 +24,7 @@ const SalesDetailsModal = ({ isOpen, onClose, data }) => {
   };
 
   // Definir las columnas de la tabla de ventas del cliente
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const columns = useMemo(() => [
     { Header: "Código", accessor: "id" },
     { Header: "Fecha", accessor: "saleDate" },

@@ -14,7 +14,7 @@ const UserMenu = ({ handleLogout }) => {
     <>
       <NavbarDropdown text="Usuario" icon={UserCircle}>
         <hr />
-        <NavbarItem url="/config" icon={Settings} text="Configuración" />
+        <NavbarItem url="/configuration" icon={Settings} text="Configuración" />
         <hr />
         <NavbarItem
           url="/downloadManual"

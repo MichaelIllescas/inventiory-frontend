@@ -34,7 +34,7 @@ const [selectedClientDetails, setSelectedClientDetails] = useState(null);
 
   useEffect(() => {
     fetchClients();
-  }, [fetchClients]);
+  }, []);
 
   const handleEdit = (id) => {
     const client = clients.find((c) => c.id === id);
