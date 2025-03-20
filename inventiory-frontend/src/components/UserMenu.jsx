@@ -22,7 +22,8 @@ const UserMenu = ({ handleLogout }) => {
           text="Descargar Manual"
         />
         <hr />
-
+        <NavbarItem url="/changePassword" icon={UserCircle} text="Cambiar Contraseña" />
+        <hr />
         {/* Botón para abrir el modal */}
         <li className="text-center">
           <button
