@@ -113,7 +113,7 @@ const ProvidersPage = () => {
         Header: "ACCIONES",
         accessor: "actions",
         Cell: ({ row }) => (
-          <div className="d-flex gap-2">
+          <div className="d-flex gap-2 justify-content-center">
             <button className="btn btn-info btn-sm" onClick={() => handleDetails(row.original.id)} title="Ver Detalles">
               🔍
             </button>
@@ -121,7 +121,7 @@ const ProvidersPage = () => {
               ✏️
             </button>
             <button
-              className={`btn btn-${row.original.state === "ACTIVO" ? "danger" : "success"} btn-sm`}
+              className={`btn px-2  btn-${row.original.state === "ACTIVO" ? "danger" : "success"} btn-sm`}
               onClick={() => handleConfirmToggle(row.original)}
               title={row.original.state === "ACTIVO" ? "Desactivar" : "Activar"}
             >
