@@ -75,7 +75,7 @@ const UserPerfilData = () => {
 
     <>
     <div className="container mt-1 py-1">
-      <Card className="shadow border-0 px-4 py-4" style={{ maxWidth: "600px", margin: "auto" }}>
+      <Card className="shadow border-0 px-4 py-4" style={{ maxWidth: "700px", margin: "auto" }}>
         <div className="text-center mb-0">
           <FaUser size={50} className="text-primary mb-0" />
           <h2 className="fw-bold">{user?.firstName} {user?.lastName}</h2>

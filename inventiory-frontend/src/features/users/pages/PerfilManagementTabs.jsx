@@ -1,18 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserPerfilData from "./UserPerfilData";
+import CompanyData from "./CompanyData";
+import CompanyRegistrationForm from "./CompanyRegistrationForm";
+import useCompany from "../api/useCompany";
 
 const ProfileManagementTabs = () => {
   const [activeTab, setActiveTab] = useState("user-profile");
+  const [companyData, setCompanyData] = useState(null);
+  const { fetchCompany, loading } = useCompany();
+
+  useEffect(() => {
+    const checkCompany = async () => {
+      const company = await fetchCompany();
+      if (company && !company.error) {
+        setCompanyData(company);
+      } else {
+        setCompanyData(null);
+      }
+    };
+
+    checkCompany();
+  }, []);
 
   const handleTabChange = (tab) => {
-    console.log(`Cambiando a tab: ${tab}`);
     setActiveTab(tab);
   };
 
   return (
     <div className="mt-3 pt-2">
       <div className="container mt-5 pt-3 card col-sm-12 col-md-8 col-lg-8">
-        {/* Tabs de navegación */}
         <ul className="nav nav-tabs">
           <li className="nav-item">
             <button
@@ -32,12 +48,22 @@ const ProfileManagementTabs = () => {
           </li>
         </ul>
 
-        {/* Contenido de los tabs */}
         <div className="tab-content mt-3">
-          {activeTab === "user-profile" && 
-            <UserPerfilData/>
-          }
-          {activeTab === "company-profile" && <p>Hola empresa</p>}
+          {activeTab === "user-profile" && <UserPerfilData />}
+          {activeTab === "company-profile" && (
+            loading ? (
+              <p>Cargando datos de empresa...</p>
+            ) : companyData ? (
+              <CompanyData companyData={companyData} />
+            ) : (
+              <CompanyRegistrationForm
+                onSuccess={(newCompany) => {
+                  setCompanyData(newCompany); // Actualiza la vista con los datos
+                  setActiveTab("company-profile"); // Cambia a la pestaña si no estaba
+                }}
+              />
+            )
+          )}
         </div>
       </div>
     </div>
