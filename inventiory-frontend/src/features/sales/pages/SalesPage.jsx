@@ -8,6 +8,8 @@ import ToastMessage from "../../../components/ToastMessage";
 import { Modal, Button } from "react-bootstrap";
 import useDelete from "../api/useDeleteSale";
 import useChangeStatusSale from "../api/useChangeStatusSale";
+import BtnDownloadResume from "./BtnDownloadResume"; 
+
 
 const SalesPage = () => {
   const { sales, loading, error, fetchSales, setSales } = useSales();
@@ -49,36 +51,29 @@ const SalesPage = () => {
         Header: "ACCIONES",
         accessor: "actions",
         Cell: ({ row }) => (
-          <div className="d-flex gap-2 justify-content-center">
-            {/* Botón para ver detalles */}
-            <button
-              className="btn btn-info btn-sm"
-              onClick={() => handleDetails(row.original.id)}
-              title="Ver Detalles"
-            >
-              🔍
-            </button>
+          <div className="d-flex gap-2 justify-content-center align-items-center">
+  {/* Botón para ver detalles */}
+  <button
+    className="btn btn-info btn-sm"
+    onClick={() => handleDetails(row.original.id)}
+    title="Ver Detalles"
+  >
+    🔍
+  </button>
 
-            {/* Switch para cambiar estado
-            <div className="form-check form-switch d-flex justify-content-center">
-              <input
-                className="form-check-input my-2 "
-                type="checkbox"
-                role="switch"
-                checked={row.original.status === "CONFIRMED"}
-                onChange={() => handleConfirmToggle(row.original)}
-              />
-            </div> */}
+  {/* Botón para descargar PDF */}
+  <BtnDownloadResume data={row.original} />
 
-            {/* Botón para eliminar venta */}
-            <button
-              className="btn btn-danger"
-              title="Eliminar Registro"
-              onClick={() => handleClickDelete(row.original)}
-            >
-              🗑️
-            </button>
-          </div>
+  {/* Botón para eliminar venta */}
+  <button
+    className="btn btn-danger"
+    title="Eliminar Registro"
+    onClick={() => handleClickDelete(row.original)}
+  >
+    🗑️
+  </button>
+</div>
+
         ),
       },
     ],
