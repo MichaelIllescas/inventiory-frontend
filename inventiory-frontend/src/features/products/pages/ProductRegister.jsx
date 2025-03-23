@@ -119,6 +119,9 @@ const ProductRegister = ({ setActiveTab, setPreselectedProduct }) => {
             </button>
           </div>
         )}
+
+{error && <div className="alert alert-danger mt-1 text-center mx-2" role="alert"><AlertTriangle/><span className="m-2">{error}</span></div>}
+
         
       </div>
     </div>

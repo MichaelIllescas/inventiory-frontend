@@ -7,12 +7,12 @@ import NavbarItem from "./NavbarItem";
 import "../styles/modal.css";
 import "../styles/userMenu.css";
 
-const UserMenu = ({ handleLogout }) => {
+const UserMenu = ({ handleLogout, user }) => {
   const [show, setShow] = useState(false);
 
   return (
     <>
-      <NavbarDropdown text="Usuario" icon={UserCircle}>
+      <NavbarDropdown text={user} icon={UserCircle}>
         <hr />
         <NavbarItem url="/configuration" icon={Settings} text="Configuración" />
         <hr />

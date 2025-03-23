@@ -73,7 +73,7 @@ const ProviderRegister = () => {
               <input type="text" name="address" id="address" value={formData.address} onChange={handleChange} required className="form-control" placeholder="Ej.: Dorrego Nro. 123, CABA" />
 
               <label htmlFor="website" className="form-label mt-3">Sitio Web:</label>
-              <input type="url" name="website" id="website" value={formData.website} onChange={handleChange} className="form-control" placeholder="Ej.: www.imperial-net.com"/>
+              <input type="text" name="website" id="website" value={formData.website} onChange={handleChange} className="form-control" placeholder="Ej.: www.imperial-net.com"/>
             </div>
 
             {/* Segunda columna */}

@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [sessionExpired, setSessionExpired] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  
 
   useEffect(() => {
     let isMounted = true;
@@ -20,7 +21,6 @@ export const AuthProvider = ({ children }) => {
     const checkSession = async () => {
       try {
         const userData = await getSession();
-
         if (isMounted) {
           if (userData) {
             setUser(userData);

@@ -229,20 +229,7 @@ const PurchasesPage = () => {
             >
               <FaEdit />
             </button>
-            {/* <button
-              className={`btn btn-${
-                row.original.state === "ACTIVO" ? "danger" : "success"
-              } btn-sm`}
-              onClick={() => handleConfirmToggle(row.original)}
-              title={row.original.state === "ACTIVO" ? "Anular" : "Activar"}
-            >
-              {row.original.state === "ACTIVO" ? (
-                <FaToggleOn />
-              ) : (
-                <FaToggleOff />
-              )}
-            </button> */}
-            
+           
             {/* Botón para eliminar venta */}
             <button
               className="btn btn-danger"
