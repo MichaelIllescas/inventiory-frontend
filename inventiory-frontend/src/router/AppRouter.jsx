@@ -28,6 +28,8 @@ import TopSellingProductsPage from "../features/reports/pages/TopSellingProducts
 import ProfitabilityPage from "../features/reports/pages/ProfitabilityPage";
 import ChangePassword from "../features/users/pages/changePassword";
 import PerfilManagemetnTabs from "../features/users/pages/PerfilManagementTabs";
+import ForgotPassword from "../components/ForgotPassword";
+import ResetPassword from "../components/ResetPassword";
 
 export const AppRoutes = () => {
   return (
@@ -36,8 +38,7 @@ export const AppRoutes = () => {
       <Route path="/login" element={<LoginPage />} />
 
       {/* Rutas protegidas dentro de MainLayout
-     
-      <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} /> */}
+      */}
         <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
         <Route path="/userList" element={<ProtectedRoute element={<UsersPage/>} />} />
         <Route path="/userRegister" element={<ProtectedRoute element={<RegisterForm/>} />} />
@@ -69,6 +70,8 @@ export const AppRoutes = () => {
 
       {/* Redirigir cualquier ruta desconocida a "/login" */}
       <Route path="*" element={<LoginPage />} />
+      <Route path="/forgotPassword" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
     </Routes>
   );
 };

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import logo from "/src/assets/img/logo.png";
@@ -137,7 +137,11 @@ export const LoginPage = () => {
 
                   <div className="col-12 text-center">
                     <p className="small mb-0">
-                      ¿Olvidaste tu contraseña? <a href="/reset-password" className="text-primary">Recuperar acceso</a>
+                    ¿Olvidaste tu contraseña?
+                    <Link to={'/forgotPassword'}>
+                    
+                    Recuperar acceso
+                    </Link> 
                     </p>
                   </div>
                 </form>
