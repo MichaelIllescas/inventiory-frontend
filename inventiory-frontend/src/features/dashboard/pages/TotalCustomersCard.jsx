@@ -1,21 +1,7 @@
-import React, { useEffect, useState } from "react";
-import apiClient from "../../../Config/axiosConfig";
+import React from "react";
 
-const TotalCustomersCard = () => {
-  const [totalCustomers, setTotalCustomers] = useState(0);
-
-  useEffect(() => {
-    const fetchCustomers = async () => {
-      try {
-        const response = await apiClient.get("/customers/count");
-        setTotalCustomers(response.data);
-      } catch (error) {
-        console.error("Error obteniendo cantidad de clientes:", error);
-      }
-    };
-
-    fetchCustomers();
-  }, []);
+const TotalCustomersCard = ({ prod }) => {
+  const totalCustomers = prod || 0;
 
   return (
     <div className="card bg-primary text-white p-3 text-center">

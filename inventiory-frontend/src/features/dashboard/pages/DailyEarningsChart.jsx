@@ -5,27 +5,57 @@ import {
   CategoryScale,
   LinearScale,
   PointElement,
+  Tooltip,
+  Legend,
 } from "chart.js";
+import React from "react";
+import dayjs from "dayjs";
+import "dayjs/locale/es";
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
 
-const DailyEarningsChart = () => {
+const DailyEarningsChart = ({ prod }) => {
+  const labels = prod?.map((item) =>
+    dayjs(item.date).locale("es").format("ddd") // "lun", "mar", etc.
+  ) || [];
+
+  const dataValues = prod?.map((item) => Number(item.profit)) || [];
+
   const data = {
-    labels: ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"],
+    labels,
     datasets: [
       {
-        label: "Ganancias Diarias",
-        data: [1200, 1500, 1300, 1800, 2500, 3000, 2000],
+        label: "Ganancias últimos 7 días",
+        data: dataValues,
         borderColor: "rgba(75,192,192,1)",
         backgroundColor: "rgba(75,192,192,0.2)",
+        tension: 0.3,
+        pointBackgroundColor: "rgba(75,192,192,1)",
+        pointRadius: 5,
       },
     ],
   };
 
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+    plugins: {
+      legend: { display: false },
+    },
+  };
+
   return (
     <div className="card p-3">
-      <h4 className="text-center">📈 Ganancias del Día</h4>
-      <Line data={data} />
+      <h4 className="text-center">📈 Ganancias Diarias por ventas (últimos 7 días)</h4>
+      <h6 className="text-center">(ventas-costos)</h6>
+      <div style={{ height: "300px" }}>
+        <Line data={data} options={options} />
+      </div>
     </div>
   );
 };

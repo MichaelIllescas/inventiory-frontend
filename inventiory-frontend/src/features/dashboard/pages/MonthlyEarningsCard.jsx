@@ -1,7 +1,7 @@
 import React from "react";
 
-const MonthlyEarningsCard = () => {
-  const gananciasMes = 85000;
+const MonthlyEarningsCard = ({ prod }) => {
+  const gananciasMes = prod || 0;
 
   return (
     <div className="card bg-primary text-white p-3 text-center">

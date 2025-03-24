@@ -1,18 +1,24 @@
 import DataTable from "../../../components/DataTable";
 
-const TopCustomersTable = () => {
-  const clientes = [
-    { id: 1, nombre: "Juan Pérez", compras: 15 },
-    { id: 2, nombre: "María López", compras: 12 },
-    { id: 3, nombre: "Carlos García", compras: 10 },
-    { id: 4, nombre: "Ana Torres", compras: 9 },
-    { id: 5, nombre: "Pedro Gómez", compras: 8 },
-  ];
+const TopCustomersTable = ({ prod }) => {
+  const clientes = prod?.map((cliente, index) => ({
+    id: index + 1,
+    customerName: cliente.customerName,
+    documentNumber: cliente.documentNumber,
+    totalPurchases: cliente.totalPurchases,
+    totalSpent: cliente.totalSpent,
+  })) || [];
 
   const columns = [
     { Header: "ID", accessor: "id" },
-    { Header: "Cliente", accessor: "nombre" },
-    { Header: "Compras", accessor: "compras" },
+    { Header: "Cliente", accessor: "customerName" },
+    { Header: "Documento", accessor: "documentNumber" },
+    { Header: "Compras", accessor: "totalPurchases" },
+    {
+      Header: "Total Gastado",
+      accessor: "totalSpent",
+      Cell: ({ value }) => `$${Number(value).toLocaleString()}`,
+    },
   ];
 
   return (

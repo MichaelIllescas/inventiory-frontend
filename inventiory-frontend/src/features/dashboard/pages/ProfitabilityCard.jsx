@@ -1,9 +1,7 @@
 import React from "react";
 
-const ProfitabilityCard = () => {
-  const ingresos = 85000;
-  const costos = 45000;
-  const rentabilidad = ((ingresos - costos) / ingresos) * 100;
+const ProfitabilityCard = ({ prod }) => {
+  const rentabilidad = prod || 0;
 
   return (
     <div className="card bg-warning text-dark p-3 text-center">

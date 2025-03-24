@@ -1,12 +1,13 @@
 import React from "react";
 import DataTable from "../../../components/DataTable";
 
-const BestSellingProductsTable = () => {
-  const productos = [
-    { id: 1, nombre: "Laptop", ventas: 120 },
-    { id: 2, nombre: "Mouse", ventas: 90 },
-    { id: 3, nombre: "Teclado", ventas: 75 },
-  ];
+const BestSellingProductsTable = ({ prod }) => {
+  // Mapeamos los datos que vienen del backend
+  const productos = prod?.map((producto, index) => ({
+    id: index + 1,
+    nombre: producto.productName,
+    ventas: producto.totalQuantitySold,
+  })) || [];
 
   const columns = [
     { Header: "ID", accessor: "id" },

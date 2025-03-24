@@ -5,6 +5,8 @@ import SelectProduct from "./SelectProduct";
 import useRegisterSale from "../api/useRegisterSale";
 import { LoadingScreen } from "../../../components/LoadingScreen";
 import { CheckCircle } from "lucide-react";
+import Select from "react-select";
+
 
 const SaleRegister = () => {
   const [cliente, setCliente] = useState(null);
@@ -14,6 +16,9 @@ const SaleRegister = () => {
   const [total, setTotal] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState("");
   const { registerSale, loading, error, success } = useRegisterSale();
+  const [ajusteTipo, setAjusteTipo] = useState(null); // "discount" o "increase"
+  const [ajusteValor, setAjusteValor] = useState(0);
+ 
 
   const handleRegisterSale = async () => {
     if (productsSelected.length === 0) {
@@ -114,21 +119,48 @@ const SaleRegister = () => {
       (acc, producto) => acc + producto.salePrice * producto.cantidad,
       0
     );
-
-    const descuentoAplicado = Math.min(parseFloat(descuento) || 0, 100);
-    const descuentoValor = (descuentoAplicado / 100) * subtotal;
-
-    const aumentoAplicado = Math.min(parseFloat(aumento) || 0, 100);
-    const aumentoValor = (aumentoAplicado / 100) * subtotal;
-
+  
+    const porcentaje = Math.min(parseFloat(ajusteValor) || 0, 100);
+  
+    let descuentoValor = 0;
+    let aumentoValor = 0;
+  
+    if (ajusteTipo === "discount") {
+      descuentoValor = (porcentaje / 100) * subtotal;
+    } else if (ajusteTipo === "increase") {
+      aumentoValor = (porcentaje / 100) * subtotal;
+    }
+  
     const totalCalculado = subtotal - descuentoValor + aumentoValor;
-
     setTotal(totalCalculado.toFixed(2));
+  
+    // Además, actualizamos los valores reales que se envían al backend
+    setDescuento((ajusteTipo === "discount" ? porcentaje : 0).toFixed(2));
+    setAumento((ajusteTipo === "increase" ? porcentaje : 0).toFixed(2));
   };
+  
 
+  // useEffect(() => {
+  //   actualizarTotal(productsSelected);
+  // }, [descuento, aumento, productsSelected]); // Se ejecuta cuando cambia descuento o la lista de productos
+ 
   useEffect(() => {
+    // Actualizar descuento y aumento en base al tipo seleccionado
+    if (ajusteTipo === "discount") {
+      setDescuento(parseFloat(ajusteValor) || 0);
+      setAumento(0);
+    } else if (ajusteTipo === "increase") {
+      setAumento(parseFloat(ajusteValor) || 0);
+      setDescuento(0);
+    } else {
+      setDescuento(0);
+      setAumento(0);
+    }
+  
+    // Calcular el total actualizado con los valores actuales
     actualizarTotal(productsSelected);
-  }, [descuento, aumento, productsSelected]); // Se ejecuta cuando cambia descuento o la lista de productos
+  }, [ajusteTipo, ajusteValor, productsSelected]);
+  
 
   if (loading) return <LoadingScreen />;
   return (
@@ -235,7 +267,7 @@ const SaleRegister = () => {
               </ul>
               <hr />
 
-              <h4 className="mt-3">Aplicar Descuento (%)</h4>
+              {/* <h4 className="mt-3">Aplicar Descuento (%)</h4>
               <div className="mb-3">
                 <input
                   type="number"
@@ -256,7 +288,37 @@ const SaleRegister = () => {
                   value={aumento}
                   onChange={(e) => setAumento(e.target.value)}
                 />
-              </div>
+              </div> */}
+              <h4 className="mt-3">Aplicar Descuento o Recargo (%)</h4>
+<div className="mb-3">
+  <Select
+    options={[
+      { value: "discount", label: "Descuento (%)" },
+      { value: "increase", label: "Recargo (%)" },
+    ]}
+    onChange={(option) => setAjusteTipo(option ? option.value : null)}
+    isClearable
+    placeholder="Seleccione ajuste..."
+    value={
+      ajusteTipo
+        ? {
+            value: ajusteTipo,
+            label: ajusteTipo === "discount" ? "Descuento (%)" : "Recargo (%)",
+          }
+        : null
+    }
+  />
+
+  <input
+    type="number"
+    className="form-control mt-2"
+    placeholder="Ingrese porcentaje (%)"
+    value={ajusteValor}
+    onChange={(e) => setAjusteValor(e.target.value)}
+    disabled={!ajusteTipo}
+  />
+</div>
+
               <hr />
 
               <h4 className="mt-3">Total: ${total}</h4>
