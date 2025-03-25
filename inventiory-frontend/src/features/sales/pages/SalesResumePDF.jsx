@@ -1,10 +1,19 @@
 /* eslint-disable react/prop-types */
-import { Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+  Image,
+} from "@react-pdf/renderer";
 
 // Estilos del PDF
 const styles = StyleSheet.create({
   page: {
     padding: 30,
+    paddingTop: 30,
+    paddingBottom: 30,
     fontSize: 11,
     backgroundColor: "#ffffff",
     color: "#000",
@@ -13,13 +22,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 20,
+    height: 100, 
+    borderBottom: "1px solid #000",
   },
+  
   companyInfo: {
     flex: 1,
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 95,
+    height: 95,
+    marginTop:-10
   },
   sectionTitle: {
     fontSize: 13,
@@ -63,23 +76,26 @@ const styles = StyleSheet.create({
 
 const formatCurrency = (value) => `$${value?.toFixed(2) || "0.00"}`;
 
+
 const SaleResumePDF = ({ data, company }) => {
   if (!data || !company) return null;
+const now = new Date().toLocaleString();
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         {/* Encabezado con logo y empresa */}
-        <View style={styles.header}>
-          <View style={styles.companyInfo}>
-            <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom:15 }}>{company.name}</Text>
-            <Text>CUIT: {company.taxIdentificationNumber}</Text>
-            <Text>Dirección: {company.businessAddress}</Text>
-            <Text>Teléfono: {company.phone}</Text>
-            <Text>Email: {company.email}</Text>
-          </View>
-          <Image style={styles.logo} src={"src/assets/img/logo.png"} />
-        </View>
+        <View style={styles.header} fixed>
+  <View style={styles.companyInfo}>
+    <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom:15 }}>{company.name}</Text>
+    <Text>CUIT: {company.taxIdentificationNumber}</Text>
+    <Text>Dirección: {company.businessAddress}</Text>
+    <Text>Teléfono: {company.phone}</Text>
+    <Text>Email: {company.email}</Text>
+  </View>
+  <Image style={styles.logo} src={"src/assets/img/logo.png"} />
+</View>
+
 
         <Text style={{ fontSize: 18, textAlign: "center", marginBottom: 10 }}>
           Resumen de Venta
@@ -126,12 +142,19 @@ const SaleResumePDF = ({ data, company }) => {
         {data.saleDetails.map((item) => (
           <View key={item.id} style={styles.tableRow}>
             <Text style={[styles.col, { flex: 0.7 }]}>{item.productCode}</Text>
-            <Text style={[styles.col, { flex: 2 ,paddingLeft: 10 }]}>
-              {item.productName}, {item.productDescription}, {item.productBrandName}, {item.productCategory}
+            <Text style={[styles.col, { flex: 2, paddingRigth: 20 }]}>
+              {item.productName}, {item.productDescription},{" "}
+              {item.productBrandName}, {item.productCategory}
             </Text>
-            <Text style={[styles.col, { flex: 0.7 }]}>{item.productQuantity}</Text>
-            <Text style={[styles.col, { flex: 1 }]}>{formatCurrency(item.productSalePrice)}</Text>
-            <Text style={[styles.col, { flex: 1 }]}>{formatCurrency(item.subtotal)}</Text>
+            <Text style={[styles.col, { flex: 0.7 }]}>
+              {item.productQuantity}
+            </Text>
+            <Text style={[styles.col, { flex: 1 }]}>
+              {formatCurrency(item.productSalePrice)}
+            </Text>
+            <Text style={[styles.col, { flex: 1 }]}>
+              {formatCurrency(item.subtotal)}
+            </Text>
           </View>
         ))}
 
@@ -152,7 +175,8 @@ const SaleResumePDF = ({ data, company }) => {
 
         {/* Pie de página */}
         <Text style={styles.footer}>
-          Documento generado automáticamente por el sistema Inventiory.
+          Documento generado automáticamente por el sistema Inventiory. Fecha:{" "}
+          {now}
         </Text>
       </Page>
     </Document>

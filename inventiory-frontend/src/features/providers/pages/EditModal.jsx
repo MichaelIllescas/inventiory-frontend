@@ -99,7 +99,7 @@ const EditModal = ({ isOpen, onClose, data, onSubmit }) => {
               <Form.Group>
                 <Form.Label>Sitio Web</Form.Label>
                 <Form.Control
-                  type="url"
+                  type="text"
                   name="website"
                   value={formData.website || ""}
                   onChange={handleChange}

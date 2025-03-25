@@ -45,6 +45,7 @@ const SaleRegister = () => {
       setDescuento(0);
       setTotal(0);
       setPaymentMethod("");
+      setAjusteValor(0);
     }
   }, [success]); // Se ejecuta cuando `success` cambia
 
@@ -140,9 +141,7 @@ const SaleRegister = () => {
   };
   
 
-  // useEffect(() => {
-  //   actualizarTotal(productsSelected);
-  // }, [descuento, aumento, productsSelected]); // Se ejecuta cuando cambia descuento o la lista de productos
+
  
   useEffect(() => {
     // Actualizar descuento y aumento en base al tipo seleccionado

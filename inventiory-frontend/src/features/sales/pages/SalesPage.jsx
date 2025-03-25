@@ -239,7 +239,7 @@ const SalesPage = () => {
               </button>
 
               <button className="btn btn-warning" onClick={handleReset}>
-                Reset
+                Limpiar Filtro
               </button>
             </div>
           </div>

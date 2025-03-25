@@ -119,7 +119,7 @@ const UsersPage = () => {
         Header: "ACCIONES",
         accessor: "actions",
         Cell: ({ row }) => (
-          <div>
+          <div className="d-flex ">
             <button
               className="btn btn-primary btn-sm "
               onClick={() => handleEdit(row.original.id)}

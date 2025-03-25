@@ -123,7 +123,7 @@ const ProductPage = () => {
               <FaEdit />
             </button>
             <button
-              className={`btn btn-${row.original.state === "ACTIVO" ? "danger" : "success"} btn-sm`}
+              className={`btn btn-${row.original.state === "ACTIVO" ? "success" : "danger"} btn-sm`}
               onClick={() => handleConfirmToggle(row.original)}
               title={row.original.state === "ACTIVO" ? "Desactivar" : "Activar"}
             >

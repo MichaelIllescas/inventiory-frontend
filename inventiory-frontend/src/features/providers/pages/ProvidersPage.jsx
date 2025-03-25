@@ -121,11 +121,11 @@ const ProvidersPage = () => {
               ✏️
             </button>
             <button
-              className={`btn px-2  btn-${row.original.state === "ACTIVO" ? "danger" : "success"} btn-sm`}
+              className={`btn px-2  btn-${row.original.state === "ACTIVO" ? "success" : "danger"} btn-sm`}
               onClick={() => handleConfirmToggle(row.original)}
               title={row.original.state === "ACTIVO" ? "Desactivar" : "Activar"}
             >
-              {row.original.state === "ACTIVO" ? <FaToggleOn /> : <FaToggleOff />}
+              {row.original.state === "ACTIVO" ? <FaToggleOff /> : <FaToggleOn />  }
             </button>
           </div>
         ),
