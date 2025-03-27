@@ -1,7 +1,7 @@
   import { Link } from "react-router-dom";
   import "bootstrap/dist/css/bootstrap.min.css";
   import "bootstrap/dist/js/bootstrap.bundle.min.js";
-  import apiClient from "../Config/axiosConfig";
+  import apiClient from "../config/axiosConfig";
   import logo from "../assets/img/logo.png";
   import NavbarItem from "./NavbarItem";
   import NavbarDropdown from "./NavbarDropdown";

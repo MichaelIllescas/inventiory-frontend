@@ -3,7 +3,6 @@ import { LoginPage } from "../features/auth/pages/LoginPage";
 import  Dashboard  from "../features/dashboard/pages/Dashboard";
 import  UsersPage  from "../features/users/pages/UsersPage";
 import  RegisterForm  from "../features/users/pages/RegisterForm";
-// import { Profile } from "../features/profile/Profile";
 import { ProtectedRoute } from "./ProtectedRoute";
 import ProviderRegister from "../features/providers/pages/ProviderRegister";
 import ProvidersPage from "../features/providers/pages/ProvidersPage";
@@ -30,8 +29,11 @@ import ChangePassword from "../features/users/pages/changePassword";
 import PerfilManagemetnTabs from "../features/users/pages/PerfilManagementTabs";
 import ForgotPassword from "../components/ForgotPassword";
 import ResetPassword from "../components/ResetPassword";
+import { useAuth } from "../../src/contexts/AuthContext";
 
 export const AppRoutes = () => {
+  const { user } = useAuth();
+  const role = user?.roles?.[0]?.authority;
   return (
     <Routes>
       {/* Ruta pública para el login */}
@@ -39,9 +41,19 @@ export const AppRoutes = () => {
 
       {/* Rutas protegidas dentro de MainLayout
       */}
+
+
+      {/* users managenent */}
+
+   {role === "ADMIN" && (
+  <>
+    <Route path="/userList" element={<ProtectedRoute element={<UsersPage />} />} />
+    <Route path="/userRegister" element={<ProtectedRoute element={<RegisterForm />} />} />
+  </>
+)}
+
+        
         <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
-        <Route path="/userList" element={<ProtectedRoute element={<UsersPage/>} />} />
-        <Route path="/userRegister" element={<ProtectedRoute element={<RegisterForm/>} />} />
         <Route path="/providerRegister" element={<ProtectedRoute element={<ProviderRegister/>} />} />
         <Route path="/providerList" element={<ProtectedRoute element={<ProvidersPage/>} />} />
         <Route path="/productRegister" element={<ProtectedRoute element={<ProductManagementTabs/>} />} />
@@ -61,11 +73,11 @@ export const AppRoutes = () => {
         <Route path="/monthlyIncome" element={<ProtectedRoute element={<MonthlyIncomePage/>} />} />
         <Route path="/anualIncome" element={<ProtectedRoute element={<AnnualIncomePage/>} />} />
         <Route path="/topCustomers" element={<ProtectedRoute element={<TopCustomersPage/>} />} />
-
         <Route path="/topProducts" element={<ProtectedRoute element={<TopSellingProductsPage/>} />} />
         <Route path="/profiability" element={<ProtectedRoute element={<ProfitabilityPage/>} />} />
         <Route path="/changePassword" element={<ProtectedRoute element={<ChangePassword/>} />} />
         <Route path="/configuration" element={<ProtectedRoute element={<PerfilManagemetnTabs/>} />} />
+
 
 
       {/* Redirigir cualquier ruta desconocida a "/login" */}
