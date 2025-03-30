@@ -20,10 +20,11 @@ const BtnDownloadResume = ({ data }) => {
   if (!data || !company) return null;
 
   return (
-    <PDFDownloadLink
+    <PDFDownloadLink 
       document={<SaleResumePDF data={data} company={company} />}
       fileName={`resumen_venta_${data.id || "sin_id"}.pdf`}
-      className="btn btn-primary"
+      className="btn btn-primary btn-sm p-2"
+      size={16}
     >
       {({ loading }) =>
         loading ? "Generando PDF..." : (
@@ -31,7 +32,7 @@ const BtnDownloadResume = ({ data }) => {
             title="Descargar resumen de venta"
             style={{ display: "flex", alignItems: "center", gap: "5px" }}
           >
-            <FaDownload /> Descargar PDF
+            <FaDownload size={16}/> 
           </span>
         )
       }
