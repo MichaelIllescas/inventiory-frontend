@@ -8,8 +8,7 @@ import ToastMessage from "../../../components/ToastMessage";
 import { Modal, Button } from "react-bootstrap";
 import useDelete from "../api/useDeleteSale";
 import useChangeStatusSale from "../api/useChangeStatusSale";
-import BtnDownloadResume from "./BtnDownloadResume"; 
-
+import BtnDownloadResume from "./BtnDownloadResume";
 
 const SalesPage = () => {
   const { sales, loading, error, fetchSales, setSales } = useSales();
@@ -52,28 +51,29 @@ const SalesPage = () => {
         accessor: "actions",
         Cell: ({ row }) => (
           <div className="d-flex gap-2 justify-content-center align-items-center">
-  {/* Botón para ver detalles */}
-  <button
-    className="btn btn-info btn-sm"
-    onClick={() => handleDetails(row.original.id)}
-    title="Ver Detalles"
-  >
-    🔍
-  </button>
+            {/* Botón para ver detalles */}
+            <button
+              className="btn btn-info btn-sm"
+              onClick={() => handleDetails(row.original.id)}
+              title="Ver Detalles"
+              style={{ padding: "5px" }}
+            >
+              🔍
+            </button>
 
-  {/* Botón para descargar PDF */}
-  <BtnDownloadResume data={row.original} />
+            {/* Botón para descargar PDF */}
+            <BtnDownloadResume data={row.original} />
 
-  {/* Botón para eliminar venta */}
-  <button
-    className="btn btn-danger"
-    title="Eliminar Registro"
-    onClick={() => handleClickDelete(row.original)}
-  >
-    🗑️
-  </button>
-</div>
-
+            {/* Botón para eliminar venta */}
+            <button
+              className="btn btn-danger btn-sm px-2"
+              title="Eliminar Registro"
+              onClick={() => handleClickDelete(row.original)}
+              style={{ padding: "5px" }}
+            >
+              🗑️
+            </button>
+          </div>
         ),
       },
     ],
