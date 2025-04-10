@@ -30,6 +30,7 @@
     PilcrowRight
   } from "lucide-react";
   import "../styles/nav.css";
+import InventoryTour from "../features/dashboard/pages/InventoryTour";
   const handleLogout = async () => {
     try {
       await apiClient.post("/auth/logout");
@@ -48,6 +49,7 @@
 
     return (
       <nav className="navbar navbar-expand-lg fixed-top  ">
+
         <div className="container">
           <Link to="/dashboard" className="navbar-brand">
             <img
@@ -69,12 +71,13 @@
           <div className="collapse navbar-collapse " id="navbarNav">
             <ul className="navbar-nav me-auto ">
               {/* products managenent */}
-              <NavbarDropdown text="Productos" icon={Package}>
+              <NavbarDropdown text="Productos" icon={Package} dropdownId="dropdown-producto">
                 <hr />
                 <NavbarItem
                   url="/productRegister"
                   icon={Package}
                   text="Registrar Producto"
+                   id="tour-producto"
                 />
                 <hr />
                 <NavbarItem
@@ -104,12 +107,13 @@
                 <hr />
               </NavbarDropdown>
               {/* providers managenent */}
-              <NavbarDropdown text="Proveedores" icon={Truck}>
+              <NavbarDropdown text="Proveedores" icon={Truck} dropdownId="proveedores-dropdown">
                 <hr />
                 <NavbarItem
                   url="/providerRegister"
                   icon={Truck}
                   text="Registrar Proveedor"
+                  id="tour-proveedor"
                 />
                 <hr />
                 <NavbarItem
@@ -126,6 +130,7 @@
                   url="/clientRegister"
                   icon={UserCheck}
                   text="Registrar Cliente"
+                   id="tour-cliente"
                 />
                 <hr />
                 <NavbarItem
@@ -137,12 +142,13 @@
               </NavbarDropdown>
         
               {/* buys managenent */}
-              <NavbarDropdown text="Compras" icon={ShoppingCart}>
+              <NavbarDropdown text="Compras" icon={ShoppingCart} dropdownId="dropdown-compra">
                 <hr />
                 <NavbarItem
                   url="/buyRegister"
                   icon={ShoppingCart}
                   text="Registrar Compra"
+                   id="tour-compra"
                 />
                 <hr />
                 <NavbarItem
@@ -167,12 +173,13 @@
               </NavbarDropdown>
         
               {/* Sales managenent */}
-              <NavbarDropdown text="Ventas" icon={ShoppingBag}>
+              <NavbarDropdown text="Ventas" icon={ShoppingBag} dropdownId="dropdown-venta">
                 <hr />
                 <NavbarItem
                   url="/saleRegister"
                   icon={Truck}
                   text="Registrar Venta"
+                   id="tour-venta"
                 />
                 <hr />
                 <NavbarItem
@@ -184,7 +191,7 @@
               </NavbarDropdown>
 
               {/* Repots managenent */}
-              <NavbarDropdown text="Reportes" icon={LineChart }>
+              <NavbarDropdown text="Reportes" icon={LineChart } dropdownId="dropdown-cliente">
                             <hr />
                             <NavbarItem
                               url="/dailyincome"
@@ -256,6 +263,7 @@
             </ul>
           </div>
         </div>
+        <InventoryTour />
       </nav>
     );
   };

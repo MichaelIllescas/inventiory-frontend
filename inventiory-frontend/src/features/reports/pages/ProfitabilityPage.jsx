@@ -22,6 +22,7 @@ const ProfitabilityPage = () => {
     fetchProfitability(selectedYear);
   }, [selectedYear, fetchProfitability]);
 
+
   return (
     <div className="container mt-5 pt-4">
       <div className="card shadow">
@@ -40,7 +41,7 @@ const ProfitabilityPage = () => {
               value={selectedYear}
               onChange={(e) => setSelectedYear(parseInt(e.target.value))}
             >
-              {[2025, 2026, 2027, 2028, 2029, 2030].map((year) => (
+              {[2024, 2025, 2026, 2027, 2028, 2029, 2030].map((year) => (
                 <option key={year} value={year}>
                   {year}
                 </option>
@@ -145,9 +146,10 @@ const ProfitabilityPage = () => {
                   </strong>{" "}
                   $
                   {(
-                    financialData.productCost + financialData.expenses
+                    financialData.totalCost + financialData.expenses
                   ).toLocaleString()}
                 </p>
+                
                 <p>
                   <strong>Beneficio Neto:</strong> $
                   {financialData.netProfit.toLocaleString()}

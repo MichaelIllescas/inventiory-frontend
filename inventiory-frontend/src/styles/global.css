@@ -22,7 +22,7 @@
 
 body {
   /* background-color: var(--primary-color); */
-  background-image: url('../assets/img/5570834.jpg');
+  background-image: url('../assets/img/fondo.webp');
   background-size: cover;
   background-position: center;
   background-repeat: repeat;
@@ -43,6 +43,7 @@ body {
   font-style: normal;
   font-variation-settings:
     "wdth" 100;
+    overflow-x: hidden;
 }
 
 .card{
