@@ -26,9 +26,9 @@
 
 
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 667px) {
   .image-hero-sm {
-    margin-top: 50px;
+    margin-top: 70px;
     margin-bottom: 30px;
     height: 200px;
   }
