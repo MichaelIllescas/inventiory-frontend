@@ -15,7 +15,7 @@ export const useRegisterPurchase = () => {
       );
       return response.data; // Retorna la respuesta del backend (ej.: confirmación)
     } catch (err) {
-      setError(err.response?.data?.message || "Error al registrar la compra.");
+      setError(err.response?.data?.error || "Error al registrar la compra.");
       return null;
     } finally {
       setLoading(false);

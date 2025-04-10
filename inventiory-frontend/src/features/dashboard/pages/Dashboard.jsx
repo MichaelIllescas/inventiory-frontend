@@ -10,14 +10,18 @@ import TotalCustomersCard from "./TotalCustomersCard";
 import TotalProductsCard from "./TotalProductsCard";
 import TotalInvestmentCard from "./TotalInvestmentCard";
 import useDashboardData from "../../dashboard/api/useDashboardData";
+import InventoryTour from "./InventoryTour";
 
 const Dashboard = () => {
+  
   const { dashboardData, loading, error } = useDashboardData();
 
   if (loading) return <p className="text-center mt-5">Cargando datos del dashboard...</p>;
   if (error) return <p className="text-center mt-5 text-danger">Error al cargar el dashboard.</p>;
 
   return (
+<>
+
     <div className="container mt-5 pt-4" data-aos="fade-in">
       <h1 className="mb-4 text-center" data-aos="fade-down">
         📊 Dashboard de Inventiory
@@ -76,6 +80,8 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
+
+</>
   );
 };
 
