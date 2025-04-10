@@ -32,14 +32,14 @@ const useRegisterExpense = () => {
           : null,
       };
 
-      console.log("📤 Enviando a backend:", formattedExpense); // Depuración
+     
 
       const response = await apiClient.post("/expenses/register", formattedExpense);
-      console.log("✅ Respuesta del backend:", response.data); // Depuración
+
       return response.data;
     } catch (err) {
-      console.error("❌ Error al registrar gasto:", err.response?.data || err.message);
-      setError(err.response?.data?.message || "Error al registrar el gasto");
+   
+      setError(err.response?.data?.error || "Error al registrar el gasto");
       return null;
     } finally {
       setLoading(false);

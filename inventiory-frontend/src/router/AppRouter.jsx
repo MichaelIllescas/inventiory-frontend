@@ -30,6 +30,12 @@ import PerfilManagemetnTabs from "../features/users/pages/PerfilManagementTabs";
 import ForgotPassword from "../components/ForgotPassword";
 import ResetPassword from "../components/ResetPassword";
 import { useAuth } from "../../src/contexts/AuthContext";
+import LandingPage from "../features/landing/pages/LandingPage";
+import LegalLayout from "../features/landing/components/LegalLayout";
+import RegisterFreeTrial from "../features/landing/components/RegisterFreeTrial";
+import RegisterFreeTrialPage from "../features/landing/pages/RegisterFreeTrialPage";
+import RegisterPlanPro from "../features/landing/pages/RegisterPlanProPage";
+import RegisterPlanProPage from "../features/landing/pages/RegisterPlanProPage";
 
 export const AppRoutes = () => {
   const { user } = useAuth();
@@ -38,7 +44,12 @@ export const AppRoutes = () => {
     <Routes>
       {/* Ruta pública para el login */}
       <Route path="/login" element={<LoginPage />} />
-
+      {/* Ruta pública para landing page */}
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/legalTerms" element={<LegalLayout />} />
+      <Route path="/registerFreeTrial" element={<RegisterFreeTrialPage />} />
+      <Route path="/registerPro" element={<RegisterPlanProPage />} />
+      
       {/* Rutas protegidas dentro de MainLayout
       */}
 

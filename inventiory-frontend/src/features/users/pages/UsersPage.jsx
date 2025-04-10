@@ -115,6 +115,7 @@ const UsersPage = () => {
       { Header: "ESTADO", accessor: "state" },
       { Header: "ROL", accessor: "role" },
       { Header: "FECHA DE REGISTRO", accessor: "registrationDate" },
+      { Header: "PLAN", accessor: "subscription"},
       {
         Header: "ACCIONES",
         accessor: "actions",

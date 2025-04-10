@@ -4,7 +4,7 @@ import { LoadingScreen } from "../../../components/LoadingScreen";
 import { AlertTriangle, CheckCircle,Users  } from "lucide-react";
 
 const RegisterForm = () => {
-  const { registerUser, loading, error, setError } = useRegisterUser();
+  const { registerUser, loading, error, setError } = useRegisterUser();   
   const [confirm, setConfirm] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -16,6 +16,7 @@ const RegisterForm = () => {
     email: "",
     password: "",
     role: "",
+    subscription:""
   });
 
   const handleChange = (e) => {
@@ -37,6 +38,7 @@ const RegisterForm = () => {
         email: "",
         password: "",
         role: "",
+        subscription: ""
       });
 
       if (setError) setError(null);
@@ -86,8 +88,18 @@ const RegisterForm = () => {
                 <option value="ADMIN">Administrador</option>
                 <option value="USER">Usuario</option>
               </select>
-            </div>
+
           </div>
+          <div className="col-lg-6 col-sm-12">
+            
+              <label htmlFor="subscription" className="form-label mt-3">Sucripcion:</label>
+              <select name="subscription" id="subscription" value={formData.subscription} onChange={handleChange} required className="form-select form-control">
+                <option disabled value="">Selecciona el tipo de Suscripcion</option>
+                <option value="FREE">FREE</option>
+                <option value="PRO">PRO</option>
+              </select>
+          </div>
+            </div>
 
           <div className="text-center mt-4 pt-3">
             <button type="submit" className="btn btn-confirm">Registrar</button>
