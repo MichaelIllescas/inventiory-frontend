@@ -7,7 +7,7 @@
   import NavbarDropdown from "./NavbarDropdown";
   import UserMenu from "./UserMenu";
   import { useAuth } from "../../src/contexts/AuthContext";
-
+  import "../styles/nav.css";
   import {
     Users,
     UserPlus,
@@ -31,6 +31,7 @@
   } from "lucide-react";
   import "../styles/nav.css";
 import InventoryTour from "../features/dashboard/pages/InventoryTour";
+import { useRef } from "react";
   const handleLogout = async () => {
     try {
       await apiClient.post("/auth/logout");
@@ -46,9 +47,14 @@ import InventoryTour from "../features/dashboard/pages/InventoryTour";
     const { user } = useAuth();
     const role = user?.roles?.[0]?.authority;
     const userName = user?.Name
+    const navRef = useRef(null);
+
+
+    
 
     return (
-      <nav className="navbar navbar-expand-lg fixed-top  ">
+      <>
+      <nav ref={navRef} className="navbar navbar-expand-lg fixed-top">
 
         <div className="container">
           <Link to="/dashboard" className="navbar-brand">
@@ -263,8 +269,11 @@ import InventoryTour from "../features/dashboard/pages/InventoryTour";
             </ul>
           </div>
         </div>
-        <InventoryTour />
+      
       </nav>
+        <InventoryTour />
+        
+        </>
     );
   };
 

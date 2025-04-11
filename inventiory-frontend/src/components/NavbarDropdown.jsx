@@ -2,6 +2,7 @@ import { useEffect } from "react"; // Agregar useEffect
 import { ChevronDown } from "lucide-react";
 
 import "../styles/nav.css";
+
 const NavbarDropdown = ({ text, icon: Icon, children, dropdownId }) => {
   return (
     <li className="nav-item dropdown" id={dropdownId}>
@@ -14,7 +15,7 @@ const NavbarDropdown = ({ text, icon: Icon, children, dropdownId }) => {
         {Icon && <Icon className="me-2" size={20} />}
         {text}
       </a>
-      <ul className="dropdown-menu ul-dropdown">{children}</ul>
+      <ul className="dropdown-menu ul-dropdown" data-bs-auto-close="outside">{children}</ul>
     </li>
   );
 };

@@ -6,37 +6,49 @@ import StepProducto from "../components/StepProducto.jsx";
 import StepCompra from "../components/StepCompra.jsx";
 import StepVenta from "../components/StepVenta.jsx";
 import CustomTooltip from "../components/CustomTooltip.jsx";
+import '../../../styles/tour-fix.css';
+import "../../../styles/nav.css";
 
 const InventoryTour = () => {
   const [run, setRun] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
+  let dropdownTimeout = null;
 
   const steps = [
     {
       target: "body",
       placement: "center",
-      content:
-      <WelcomeStep />,
+      content: <WelcomeStep />,
+      disableOverlay: true,
+  disableScrolling: true,
     },
     {
       target: "#tour-proveedor",
       placement: "bottom",
-      content: <StepProveedor/>,
+      content: <StepProveedor />,
+      disableOverlay: true,
+  disableScrolling: true,
     },
     {
       target: "#tour-producto",
       placement: "bottom",
-      content: <StepProducto/>
+      content: <StepProducto />,
+      disableOverlay: true,
+  disableScrolling: true,
     },
     {
       target: "#tour-compra",
       placement: "bottom",
-      content: <StepCompra/>
+      content: <StepCompra />,
+      disableOverlay: true,
+      disableScrolling: true,
     },
     {
       target: "#tour-venta",
       placement: "bottom",
-      content: <StepVenta/>,
+      content: <StepVenta />,
+      disableOverlay: true,
+  disableScrolling: true,
     },
   ];
 
@@ -55,52 +67,83 @@ const InventoryTour = () => {
     const dropdowns = document.querySelectorAll(".dropdown");
     dropdowns.forEach((dropdown) => {
       dropdown.classList.remove("show");
-      const menu = dropdown.querySelector(".dropdown-menu");
+
       const toggle = dropdown.querySelector(".dropdown-toggle");
-      if (menu) menu.classList.remove("show");
-      if (toggle) toggle.setAttribute("aria-expanded", "false");
+      const menu = dropdown.querySelector(".dropdown-menu");
+
+      if (toggle) {
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.classList.remove("show");
+        toggle.blur(); // remueve focus visual
+      }
+
+      if (menu) {
+        menu.classList.remove("show");
+        menu.style.removeProperty("display");
+        menu.style.removeProperty("position");
+        menu.style.removeProperty("inset");
+        menu.style.removeProperty("transform");
+        menu.style.removeProperty("top");
+        menu.style.removeProperty("left");
+        menu.style.removeProperty("right");
+        menu.style.removeProperty("z-index");
+        menu.style.removeProperty("opacity");
+      }
     });
+
+    const backdrop = document.querySelector(".dropdown-backdrop");
+    if (backdrop) backdrop.remove();
   };
 
-  const openDropdown = (stepIdx) => {
-    const id = dropdownMap[stepIdx];
-    if (!id) return;
-  
-    closeAllDropdowns(); // cerramos todo primero
-  
-    // 👉 Abrir el menú colapsado si es necesario (modo móvil)
-    const navbarCollapse = document.querySelector("#navbarNav");
-    const isCollapsed = navbarCollapse?.classList?.contains("collapse") &&
-                        !navbarCollapse?.classList?.contains("show");
-  
-    if (isCollapsed) {
-      const toggleButton = document.querySelector(".navbar-toggler");
-      if (toggleButton) toggleButton.click();
-    }
-  
-    // Esperar un poco antes de abrir el dropdown (para que el navbar esté desplegado)
-    setTimeout(() => {
-      const dropdown = document.querySelector(id);
-      const menu = dropdown?.querySelector(".dropdown-menu");
-      const toggle = dropdown?.querySelector(".dropdown-toggle");
-  
-      if (dropdown && menu && toggle) {
-        dropdown.classList.add("show");
-        menu.classList.add("show");
-        toggle.setAttribute("aria-expanded", "true");
-      }
-    }, 300); // esperá unos ms por si el colapso necesita animarse
-  };
   const closeNavbarMobile = () => {
     const navbarCollapse = document.querySelector("#navbarNav");
-    const isMobileOpen = navbarCollapse?.classList?.contains("show");
-  
-    if (isMobileOpen) {
-      const toggleButton = document.querySelector(".navbar-toggler");
+    const toggleButton = document.querySelector(".navbar-toggler");
+
+    if (navbarCollapse?.classList.contains("show")) {
       if (toggleButton) toggleButton.click();
     }
+
+    if (navbarCollapse) {
+      navbarCollapse.classList.remove("collapsing");
+      navbarCollapse.classList.remove("show");
+      navbarCollapse.classList.add("collapse");
+    }
+
+    if (toggleButton) {
+      toggleButton.setAttribute("aria-expanded", "false");
+      toggleButton.classList.remove("collapsed");
+    }
   };
+
+  const resetBodyStyles = () => {
+    const cleanStyles = (el) => {
+      if (!el) return;
+      el.style.position = "";
+      el.style.top = "";
+      el.style.left = "";
+      el.style.right = "";
+      el.style.bottom = "";
+      el.style.transform = "";
+      el.style.zIndex = "";
+      el.style.overflow = "";
+      el.style.height = "";
+      el.style.width = "";
+    };
   
+    cleanStyles(document.body);
+    cleanStyles(document.documentElement);
+  
+    // NUEVO: limpiar el NAV si quedó con stacking roto
+    const nav = document.querySelector("nav.navbar");
+    cleanStyles(nav);
+  
+    document.body.classList.remove("react-joyride__body--prevent-scroll");
+    document.body.classList.remove("react-joyride__scroll-parent");
+    document.body.classList.remove("react-joyride__body--fixed");
+  
+    // Forzar reflow
+    void document.body.offsetHeight;
+  };
   
 
   const waitForVisible = (selector, callback, tries = 0) => {
@@ -115,16 +158,44 @@ const InventoryTour = () => {
     }
   };
 
+  const openDropdown = (stepIdx) => {
+    const id = dropdownMap[stepIdx];
+    if (!id) return;
+
+    closeAllDropdowns();
+
+    const navbarCollapse = document.querySelector("#navbarNav");
+    const isCollapsed = navbarCollapse?.classList?.contains("collapse") &&
+      !navbarCollapse?.classList?.contains("show");
+
+    if (isCollapsed) {
+      const toggleButton = document.querySelector(".navbar-toggler");
+      if (toggleButton) toggleButton.click();
+    }
+
+    dropdownTimeout = setTimeout(() => {
+      const dropdown = document.querySelector(id);
+      const menu = dropdown?.querySelector(".dropdown-menu");
+      const toggle = dropdown?.querySelector(".dropdown-toggle");
+
+      if (dropdown && menu && toggle) {
+        dropdown.classList.add("show");
+        menu.classList.add("show");
+        toggle.setAttribute("aria-expanded", "true");
+      }
+    }, 300);
+  };
+
   const handleCallback = ({ type, index, lifecycle, action, status }) => {
     let nextIndex = index;
-  
+
     if (type === "step:after" && lifecycle === "complete") {
       if (action === "prev") {
         nextIndex = index - 1;
       } else if (action === "next") {
         nextIndex = index + 1;
       }
-  
+
       if (dropdownMap[nextIndex]) {
         openDropdown(nextIndex);
         const nextTarget = steps[nextIndex]?.target;
@@ -137,36 +208,40 @@ const InventoryTour = () => {
         setStepIndex(nextIndex);
       }
     }
-  
-    // 👇 Manejo cuando el usuario presiona "Saltar" o termina
+
     if (
       (type === "step:after" && action === "skip") ||
       type === "tour:end" ||
       status === "skipped"
     ) {
-      closeAllDropdowns();
-      closeNavbarMobile();
+      if (dropdownTimeout) clearTimeout(dropdownTimeout);
+
+      setTimeout(() => {
+        closeAllDropdowns();
+        closeNavbarMobile();
+        resetBodyStyles();     // 💡 solución clave
+        setRun(false);
+        setStepIndex(0);
+      }, 150);
     }
   };
-  
 
   return (
-   
-<Joyride
-  steps={steps}
-  run={run}
-  stepIndex={stepIndex}
-  continuous
-  callback={handleCallback}
-  showSkipButton
-  showProgress
-  tooltipComponent={CustomTooltip} // 👈 aquí lo usás
-  styles={{
-    options: {
-      zIndex: 9999,
-    },
-  }}
-/>
+    <Joyride
+      steps={steps}
+      run={run}
+      stepIndex={stepIndex}
+      continuous
+      callback={handleCallback}
+      showSkipButton
+      showProgress
+      tooltipComponent={CustomTooltip}
+      styles={{
+        options: {
+          zIndex: 9999,
+        },
+      }}
+    />
   );
 };
 

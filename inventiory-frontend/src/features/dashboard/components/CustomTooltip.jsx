@@ -19,6 +19,7 @@ const CustomTooltip = ({
           boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
           fontFamily: "'Segoe UI', sans-serif",
           color: "#333",
+          transform: "translate(-5%, -0%)",
         }}
       >
         {/* Contenido del paso */}
